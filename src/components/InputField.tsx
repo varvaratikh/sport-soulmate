@@ -5,6 +5,7 @@ interface InputFieldProps {
     type?: string;
     value: string;
     onChange: (value: string) => void;
+    className?: string; // Добавляем опциональное свойство className
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -12,13 +13,14 @@ const InputField: React.FC<InputFieldProps> = ({
                                                    type = "text",
                                                    value,
                                                    onChange,
+                                                   className // Принимаем className
                                                }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
     };
 
     return (
-        <div className="input-field">
+        <div className={`input-field ${className}`}>
             <label style={{ fontSize: '150%' }}>{label}</label>
             <input
                 type={type}
