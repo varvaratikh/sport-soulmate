@@ -3,7 +3,7 @@ import React from 'react';
 interface ButtonProps {
     label: string;
     onClick: () => void;
-    style?: React.CSSProperties; // Добавляем опциональное свойство style типа React.CSSProperties
+    style?: React.CSSProperties;
     className?: string;
 }
 

@@ -5,7 +5,7 @@ interface InputFieldProps {
     type?: string;
     value: string;
     onChange: (value: string) => void;
-    className?: string; // Добавляем опциональное свойство className
+    className?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -13,7 +13,7 @@ const InputField: React.FC<InputFieldProps> = ({
                                                    type = "text",
                                                    value,
                                                    onChange,
-                                                   className // Принимаем className
+                                                   className
                                                }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);

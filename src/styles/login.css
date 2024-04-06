@@ -188,4 +188,52 @@
   border-color: red;
 }
 
+.login-page {
+  position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .login-page {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
+  }
+  .login-form {
+    width: 80%;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  .input-field {
+    width: calc(100% - 40px);
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  .input-field input {
+    width: calc(100% - 40px);
+    padding: 10px;
+  }
+  .button-container {
+    justify-content: center;
+    flex-direction: column;
+  }
+  .button-container .text {
+    margin-left: 10px;
+    margin-top: 30px;
+    align-self: center;
+    margin-right: 1px;
+  }
+  .register-button {
+    margin-top: 10px;
+  }
+  .popup {
+    width: 100%;
+    padding: 20px;
+  }
+  .button {
+    width: 170px;
+  }
+}
+
 /*# sourceMappingURL=login.css.map */

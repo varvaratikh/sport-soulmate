@@ -9,25 +9,25 @@ const LoginPage: React.FC = () => {
     const [showRegisterPopup, setShowRegisterPopup] = useState(false); // Состояние для отображения/скрытия попапа
 
     const handleLoginChange = (value: string) => {
-        // Обработчик изменения логина
+        // обработчик изменения логина
         console.log('New login:', value);
     };
 
     const handlePasswordChange = (value: string) => {
-        // Обработчик изменения пароля
+        // обработчик изменения пароля
         console.log('New password:', value);
     };
 
     const handleLogin = () => {
-        // Обработчик нажатия на кнопку "Login"
+        // обработчик нажатия на кнопку "Login"
         console.log('Login button clicked');
-        // Добавьте здесь логику для входа пользователя
+        // здесь логика для входа пользователя
     };
 
     const handleRegister = () => {
-        // Обработчик нажатия на кнопку "Register"
+        // обработчик нажатия на кнопку "Register"
         console.log('Register button clicked');
-        setShowRegisterPopup(true); // Показать попап при нажатии на кнопку "Регистрация"
+        setShowRegisterPopup(true);
     };
 
     const [loginValue, setLoginValue] = useState('');

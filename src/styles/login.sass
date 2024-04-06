@@ -1,7 +1,7 @@
 .login-page
   display: flex
   justify-content: flex-end
-  align-items: center // Содержимое контейнера по центру по вертикали
+  align-items: center
   background-image: url('../assets/backgroundLogin.jpg')
   background-size: cover
   background-position: center
@@ -9,9 +9,9 @@
   position: relative
 
 .login-form
-  width: 50%  // Ширина контейнера с формой (правая половина экрана)
-  margin-right: -90px // Уменьшаем отступ справа
-  padding: 20px // Отступы внутри контейнера с формой
+  width: 50%
+  margin-right: -90px
+  padding: 20px
   justify-content: flex-start
   margin-top: -55px
 
@@ -36,15 +36,14 @@
   color: white
 
 // Button
-
 .button
-  background-color: transparent /* Прозрачный фон */
-  border: 2px solid white /* Белый контур */
-  color: white /* Цвет текста */
-  padding:  2% 10% /* Размеры кнопки */
-  font-size: 150% /* Размер шрифта */
-  cursor: pointer /* Курсор при наведении */
-  transition: all 0.3s ease /* Плавный переход при изменении свойств */
+  background-color: transparent
+  border: 2px solid white
+  color: white
+  padding:  2% 10%
+  font-size: 150%
+  cursor: pointer
+  transition: all 0.3s ease
   border-radius: 30px
   margin-top: 4%
 
@@ -53,19 +52,19 @@
   justify-content: flex-start
 
 .button-container .text
-  margin-right: 10px /* Небольшой отступ между текстом и первой кнопкой */
+  margin-right: 10px
 
 
 
 
 .button:hover
-  background-color: white /* Фон при наведении */
-  color: black /* Цвет текста при наведении */
+  background-color: white
+  color: black
 
 @media screen and (max-width: 768px)
 .button
-  padding: 1.5% 3% /* Изменение размеров для меньших экранов */
-  font-size: 0.9em /* Изменение размера шрифта для меньших экранов */
+  padding: 1.5% 3%
+  font-size: 0.9em
 
 .input-field input
   width: 70%
@@ -80,30 +79,29 @@
 .button-container
   display: flex
   justify-content: flex-start
-  align-items: center /* Выравнивание элементов по центру по вертикали */
+  align-items: center
 
 
 .button-container .text
-  margin-right: 0px /* Небольшой отступ между текстом и первой кнопкой */
+  margin-right: 0px
   margin-left: 50px
   margin-top: 26px
   color: grey
 
 .register-button
-  background-color: transparent /* Прозрачный фон */
-  border: none /* Убираем границу */
-  padding: 0 /* Убираем внутренние отступы */
-  margin-left: 5px /* Отступ слева */
-  cursor: pointer /* Показываем, что это интерактивный элемент */
+  background-color: transparent
+  border: none
+  padding: 0
+  margin-left: 5px
+  cursor: pointer
   margin-top: 26px
 
 .register-button:hover
-  background-color: transparent /* Фон при наведении */
-  color: lightgrey /* Цвет текста при наведении */
+  background-color: transparent
+  color: lightgrey
 
 
 //popup
-
 .popup-overlay
   position: fixed
   top: 0
@@ -144,7 +142,7 @@
   height: 100%
   background-size: cover
   background-position: center
-  filter: brightness(0.4) /* Применяем эффект затемнения с коэффициентом 0.5 */
+  filter: brightness(0.4)
 
 
 .close
@@ -179,3 +177,53 @@
 
 .input-container .password-mismatch input
   border-color: red
+
+.login-page
+  position: relative
+
+
+// адаптив
+@media screen and (max-width: 768px)
+  .login-page
+    justify-content: center
+    align-items: center
+    height: 100vh
+    padding: 0
+
+  .login-form
+    width: 80%
+    margin: 0 auto
+    padding: 30px
+
+  .input-field
+    width: calc(100% - 40px)
+    margin-bottom: 20px
+    margin-left: 20px
+    margin-right: 10px
+
+  .input-field input
+    width: calc(100% - 40px)
+    padding: 10px
+
+  .button-container
+    justify-content: center
+    flex-direction: column
+
+  .button-container .text
+    margin-left: 10px
+    margin-top: 30px
+    align-self: center
+    margin-right: 1px
+
+  .register-button
+    margin-top: 10px
+
+  .popup
+    width: 100%
+    padding: 20px
+
+  .button
+    width: 170px
+    //margin-bottom: 10px
+
+

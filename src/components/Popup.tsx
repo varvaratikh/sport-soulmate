@@ -14,7 +14,7 @@ const RegisterPopup: React.FC<PopupProps> = ({ onClose, backgroundImage }) => {
     const [passwordError, setPasswordError] = useState('');
     const [passwordMismatch, setPasswordMismatch] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
-    const [submitted, setSubmitted] = useState(false); // Состояние для отслеживания нажатия кнопки регистрации
+    const [submitted, setSubmitted] = useState(false);
 
     const handleUsernameChange = (value: string) => {
         setUsername(value);
@@ -22,7 +22,6 @@ const RegisterPopup: React.FC<PopupProps> = ({ onClose, backgroundImage }) => {
 
     const handlePasswordChange = (value: string) => {
         setPassword(value);
-        // Сбрасываем состояния при изменении пароля
         setPasswordError('');
         setPasswordMismatch(false);
         setSubmitted(false);
@@ -30,29 +29,29 @@ const RegisterPopup: React.FC<PopupProps> = ({ onClose, backgroundImage }) => {
 
     const handleConfirmPasswordChange = (value: string) => {
         setConfirmPassword(value);
-        // Сбрасываем состояния при изменении повторного пароля
+        // сбрасываем состояния при изменении повторного пароля
         setPasswordError('');
         setPasswordMismatch(false);
         setSubmitted(false);
     };
 
     const handleSubmit = () => {
-        setSubmitted(true); // Пользователь отправил данные
-        // Проверка на совпадение паролей
+        setSubmitted(true); // ввод данных
+        // проверка на совпадение паролей
         if (password !== confirmPassword) {
             setPasswordError('Пароли не совпадают');
             setPasswordMismatch(true);
             return;
         }
-        // Проверка на минимальную длину пароля
+        // проверка на минимальную длину пароля
         if (password.length < 6) {
             setPasswordError('Пароль должен содержать не менее 6 символов');
             return;
         }
-        // Здесь можете добавить логику для отправки данных регистрации на сервер
+        // логика для отправки данных регистрации на сервер
         console.log('Submitting with username:', username, 'and password:', password);
-        onClose(); // Закрываем попап после успешной отправки данных
-        setIsVisible(false); // Скрываем попап
+        onClose();
+        setIsVisible(false);
     };
 
     return (
