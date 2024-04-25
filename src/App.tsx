@@ -6,8 +6,6 @@ import About from './pages/About';
 import Chat from './pages/Chat';
 import HomePage from "./components/main_page/middle/HomePage";
 import NewsHomePage from "./components/main_page/news_fragment/NewsHomePage";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/LoginPage'
 
 const App: React.FC = () => {
     return (
@@ -25,11 +23,5 @@ const App: React.FC = () => {
         </Router>
     );
 };
-            <Routes>
-                <Route path="/" element={<LoginPage />} />
-            </Routes>
-        </Router>
-    );
-}
 
 export default App;
