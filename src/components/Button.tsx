@@ -5,11 +5,12 @@ interface ButtonProps {
     onClick: () => void;
     style?: React.CSSProperties;
     className?: string;
+    type?: "button" | "submit" | "reset" | undefined;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, style, className }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, style, className, type = "button" }) => {
     return (
-        <button className={`button ${className}`} onClick={onClick} style={style}>{label}</button>
+        <button type={type} className={`button ${className}`} onClick={onClick} style={style}>{label}</button>
     );
 };
 

@@ -1,53 +1,90 @@
 import React, { useState } from 'react';
-import InputField from '../components/InputField';
+import { Formik, Form, Field } from 'formik';
 import backgroundImage from '../assets/backgroundLogin.jpg';
-import '../styles/login.css';
-import Button from "../components/Button";
-import RegisterPopup from "../components/Popup";
+import '../styles/log.scss';
+import * as Yup from 'yup';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import RegisterPopup from '../components/RegisterPopup';
+
+interface Values {
+    login: string;
+    password: string;
+}
+
+const validationSchema = Yup.object({
+    login: Yup.string().required('Обязательное поле'),
+    password: Yup.string().required('Обязательное поле'),
+});
 
 const LoginPage: React.FC = () => {
-    const [showRegisterPopup, setShowRegisterPopup] = useState(false); // Состояние для отображения/скрытия попапа
-
-    const handleLoginChange = (value: string) => {
-        // обработчик изменения логина
-        console.log('New login:', value);
+    const initialValues = {
+        login: '',
+        password: '',
     };
 
-    const handlePasswordChange = (value: string) => {
-        // обработчик изменения пароля
-        console.log('New password:', value);
-    };
-
-    const handleLogin = () => {
-        // обработчик нажатия на кнопку "Login"
-        console.log('Login button clicked');
-        // здесь логика для входа пользователя
-    };
-
-    const handleRegister = () => {
-        // обработчик нажатия на кнопку "Register"
-        console.log('Register button clicked');
-        setShowRegisterPopup(true);
-    };
-
-    const [loginValue, setLoginValue] = useState('');
-    const [passwordValue, setPasswordValue] = useState('');
-
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <>
             <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
-                <div className="login-form">
-                    <InputField label="Логин" value={loginValue} onChange={setLoginValue} />
-                    <InputField label="Пароль" type="password" value={passwordValue} onChange={setPasswordValue} />
-                    <div className="button-container">
-                        <Button label="Войти" onClick={handleLogin} />
-                        <span className="text">Ещё не создали аккаунт?</span>
-                        <Button label="Регистрация" onClick={handleRegister} className="register-button" />
-                    </div>
-                </div>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                            alert(JSON.stringify(values, null, 2));
+                            setSubmitting(false);
+                        }, 500);
+                    }}
+                >
+                    {(formik) => (
+                        <Form className="login-form">
+                            <div className="input-field">
+                                <label htmlFor="login">Логин</label>
+                                <div className={`login-input${formik.errors.login && formik.touched.login ? ' input-error' : ''}`}>
+                                    <Field
+                                        id="login"
+                                        name="login"
+                                        className={`input-error ${formik.errors.login && formik.touched.login ? 'input-error' : ''}`}
+                                    />
+                                </div>
+                                {formik.touched.login && formik.errors.login && (
+                                    <div className="validation-message">{formik.errors.login}</div>
+                                )}
+                            </div>
+                            <div className="input-field">
+                                <label htmlFor="password">Пароль</label>
+                                <div className={`password-input${formik.errors.password && formik.touched.password ? ' input-error' : ''}`}>
+                                    <Field
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        className={formik.errors.password && formik.touched.password ? 'input-error' : ''}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="show-password-button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        {showPassword ? <RiEyeOffFill/> : <RiEyeFill/>}
+                                    </button>
+                                </div>
+
+                                {formik.touched.password && formik.errors.password && (
+                                    <div className="validation-message">{formik.errors.password}</div>
+                                )}
+                            </div>
+                            <div className="button-container">
+                                <button type="submit" className="button" disabled={formik.isSubmitting}>
+                                    Войти
+                                </button>
+                                <span className="text">Ещё не создали аккаунт?</span>
+                                <RegisterPopup />
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
-            {showRegisterPopup && <RegisterPopup backgroundImage={backgroundImage} onClose={() => setShowRegisterPopup(false)} />} {/* Отображение попапа при условии */}
         </>
     );
 };
