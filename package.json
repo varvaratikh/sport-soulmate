@@ -10,21 +10,25 @@
     "@types/node": "^16.18.91",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
+    "formik": "^2.4.6",
+    "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
+    "react-icons": "^5.1.0",
+    "react-modal": "^3.16.1",
+    "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "sass": "^1.75.0",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "sass --watch src/styles:src/styles --style compressed",
-    "sass": "sass  src/components/main_page/header/headerr.sass src/components/main_page/header/headerr.css && sass src/components/main_page/news_fragment/NewsStyle.sass src/components/main_page/news_fragment/NewsStyle.css"
+    "watch": "sass --watch src/styles:src/styles --style compressed"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-modal": "^3.16.3",
     "@babel/core": "^7.24.4",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.24.4",
