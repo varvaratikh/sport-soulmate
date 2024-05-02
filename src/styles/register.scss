@@ -1,0 +1,75 @@
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 100px;
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+.register-btn {
+  background: transparent;
+  border: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  color: green;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  color: #ccc;
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Потемнение */
+}
+
+.register-button {
+  background: transparent; /* Прозрачный фон */
+  border: none;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  color: #ccc;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+

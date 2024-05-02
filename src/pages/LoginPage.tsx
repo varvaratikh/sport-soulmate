@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import backgroundImage from '../assets/backgroundLogin.jpg';
 import '../styles/log.scss';
+import '../styles/register.scss'
 import * as Yup from 'yup';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import RegisterPopup from '../components/RegisterPopup';
+import RegisterPopup from './RegisterPopup';
 
 interface Values {
     login: string;
@@ -23,6 +24,15 @@ const LoginPage: React.FC = () => {
     };
 
     const [showPassword, setShowPassword] = useState(false);
+    const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+
+    const handleRegisterPopupOpen = () => {
+        setIsRegisterPopupOpen(true);
+    };
+
+    const handleRegisterPopupClose = () => {
+        setIsRegisterPopupOpen(false);
+    };
 
     return (
         <>
@@ -79,12 +89,13 @@ const LoginPage: React.FC = () => {
                                     Войти
                                 </button>
                                 <span className="text">Ещё не создали аккаунт?</span>
-                                <RegisterPopup />
+                                <button onClick={handleRegisterPopupOpen} className="register-button">Регистрация</button>
                             </div>
                         </Form>
                     )}
                 </Formik>
             </div>
+            <RegisterPopup isOpen={isRegisterPopupOpen} onClose={handleRegisterPopupClose} />
         </>
     );
 };

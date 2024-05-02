@@ -14,12 +14,12 @@ const App: React.FC = () => {
             <Header />
             <Routes>
                 <Route path="/" element={<LoginPage />} />
-                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/chat" element={<Chat />} />
             </Routes>
-            <HomePage/>
-            <NewsHomePage/>
+            {/*<HomePage/>*/}
+            {/*<NewsHomePage/>*/}
         </Router>
     );
 };
