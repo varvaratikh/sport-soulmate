@@ -1,36 +1,49 @@
 import React, { ChangeEvent } from "react";
 
 interface InputFieldProps {
-    label: string;
     type?: "text" | "password" | "email" | "number" | "tel" | "search" | undefined;
     value: string;
     onChange: (value: string) => void;
     className?: string;
     name?: string;
+    label?: string;
+    error?: string | undefined;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
-                                                   label,
                                                    type = "text",
                                                    value,
                                                    onChange,
                                                    className,
-                                                   name
+                                                   name,
+                                                   label,
+    error,
                                                }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
     };
 
     return (
-        <div className={`input-field ${className}`}>
-            <label style={{ fontSize: '150%' }}>{label}</label>
+        <div className={`input-field ${error ? 'error' : ''} ${className || ''}`}>
+            <label htmlFor={name} style={{marginBottom: '10px'}}>{label}</label>
             <input
-                type={type}
+                type="text" // Изменяем тип поля ввода на "text"
                 name={name}
+                id={name}
                 value={value}
                 onChange={handleChange}
-                style={{ height: '45px', paddingLeft: '25px', paddingRight: '25px', fontSize: 18 }}
+                className={error ? 'input-error' : ''}
+                style={{
+                    height: '45px',
+                    paddingLeft: '25px',
+                    paddingRight: '25px',
+                    fontSize: 18,
+                    borderRadius: '20px', // добавляем закругление
+                    border: '1px solid #ccc' // устанавливаем тонкую линию контура
+                }}
             />
+            {error && <div className="validation-message">{error}</div>}
+
         </div>
     );
 };

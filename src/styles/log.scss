@@ -252,4 +252,21 @@
       }
     }
   }
+
+  .register-button {
+    background: none; /* Убираем задний фон */
+    color: whitesmoke;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px; /* Опционально: можно добавить скругленные углы */
+    padding: 10px 20px; /* Опционально: можно настроить внутренние отступы */
+    font-size: 14px;
+    margin-bottom: 3px;
+    margin-left: -10px;
+  }
+
+  .register-button:hover {
+    color: #ccc; /* Изменяем цвет текста при наведении */
+  }
+
 }

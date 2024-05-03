@@ -1,75 +1,63 @@
-.modal-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
+.register-popup-container {
+  text-align: center;
 
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  max-width: 100px;
-  width: 100%;
-}
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
+  label {
+    margin-bottom: 10px;
+    display: block;
+    font-size: 18px;
+  }
 
-.modal-header h2 {
-  font-size: 24px;
-  margin: 0;
-}
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 0 10px;
+    margin-bottom: 10px;
+  }
 
-.close-btn {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #999;
-  transition: color 0.3s ease;
-}
+  .validation-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
 
-.close-btn:hover {
-  color: #333;
-}
+  .register-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+  }
 
-.register-btn {
-  background: transparent;
-  border: none;
-  transition: all 0.3s ease;
-  font-size: 16px;
-  color: green;
-  cursor: pointer;
-}
+  .register-btn:hover {
+    background-color: #45a049;
+  }
 
-.register-btn:hover {
-  color: #ccc;
-}
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+  }
 
-.ReactModal__Overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Потемнение */
-}
-
-.register-button {
-  background: transparent; /* Прозрачный фон */
-  border: none;
-  transition: all 0.3s ease;
-  font-size: 16px;
-  color: whitesmoke;
-  cursor: pointer;
-}
-
-.register-button:hover {
-  color: #ccc;
-}
-
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  .close-btn:hover {
+    color: #555;
+  }
 }
 
