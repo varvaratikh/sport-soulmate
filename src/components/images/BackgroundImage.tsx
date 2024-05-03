@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const BackgroundImage = () => {
     return (
         <StyledBackground>
-            <img src="../assets/backgroundLogin.jpg" alt="Background" />
+            <img src="../../assets/backgroundLogin.jpg" alt="Background" />
         </StyledBackground>
     );
 };
