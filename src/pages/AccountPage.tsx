@@ -2,8 +2,9 @@ import React from 'react';
 import TopImage from '../components/images/TopImage';
 import formImage from '../assets/form.jpg';
 import UserInfoOverlay from '../components/UserInfoOverlay';
-import Header from "../components/main_page/header/Header";
 import userPhoto from "../assets/userPhoto.jpg"
+import DataForm from "../components/DataForm";
+import { Formik, Form, FormikProps } from 'formik';
 
 const AccountPage: React.FC = () => {
     const user = {
@@ -14,11 +15,30 @@ const AccountPage: React.FC = () => {
         photo: userPhoto
     };
 
+    const initialValues = {
+        sport: '',
+        age: '',
+        city: ''
+    };
+
+    const handleSave = (values: typeof initialValues) => {
+        console.log('Сохранено:', values);
+    };
+
     return (
-        <div style={{ position: 'relative' }}>
-            <Header/>
+        <div>
             <TopImage imagePath={formImage}/>
             <UserInfoOverlay user={user} />
+            <Formik initialValues={initialValues} onSubmit={handleSave}>
+                {(formikProps: FormikProps<typeof initialValues>) => (
+                    <Form>
+                        <DataForm
+                            onChange={(field, value) => formikProps.setFieldValue(field, value)}
+                            onSave={formikProps.submitForm}
+                        />
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };

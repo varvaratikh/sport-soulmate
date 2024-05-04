@@ -21,7 +21,7 @@ const UserInfoContainer = styled.div`
     text-align: center;
     margin-top: 100px;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
+    flex-direction: column; 
     align-items: center;
 `;
 

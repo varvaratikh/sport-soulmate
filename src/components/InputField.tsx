@@ -17,7 +17,7 @@ const InputField: React.FC<InputFieldProps> = ({
                                                    className,
                                                    name,
                                                    label,
-    error,
+                                                   error,
                                                }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
@@ -27,7 +27,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <div className={`input-field ${error ? 'error' : ''} ${className || ''}`}>
             <label htmlFor={name} style={{marginBottom: '10px'}}>{label}</label>
             <input
-                type="text" // Изменяем тип поля ввода на "text"
+                type={type}
                 name={name}
                 id={name}
                 value={value}
@@ -38,12 +38,11 @@ const InputField: React.FC<InputFieldProps> = ({
                     paddingLeft: '25px',
                     paddingRight: '25px',
                     fontSize: 18,
-                    borderRadius: '20px', // добавляем закругление
-                    border: '1px solid #ccc' // устанавливаем тонкую линию контура
+                    borderRadius: '20px',
+                    border: '1px solid #ccc'
                 }}
             />
             {error && <div className="validation-message">{error}</div>}
-
         </div>
     );
 };

@@ -137,7 +137,7 @@ const FieldContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-    margin-top: 20px; // Добавляем отступ для кнопки
+    margin-top: 20px; 
     color: #4CAF50;
     border: 2px solid #ccc;
 `;
