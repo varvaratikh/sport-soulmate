@@ -51,7 +51,6 @@ const StrongText = styled.strong`
     font-size: 25px;
     font-weight: 400;
     margin-bottom: 5px;
-     /* Example color */
 `;
 
 const UserInfoOverlay: React.FC<UserInfoOverlayProps> = ({ user }) => {
