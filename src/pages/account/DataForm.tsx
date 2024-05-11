@@ -125,7 +125,7 @@ const SportItem = styled.div`
 const DataForm: React.FC<DataFormProps> = ({ onChange, onSave }) => {
     const [sports, setSports] = useState<string[]>([]);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-    const [isEditing, setIsEditing] = useState<boolean>(true); // Добавлено состояние для отслеживания режима редактирования
+    const [isEditing, setIsEditing] = useState<boolean>(true);
     const [submittedData, setSubmittedData] = useState<any>(null);
     const initialValues = {
         sport: '',
@@ -147,8 +147,14 @@ const DataForm: React.FC<DataFormProps> = ({ onChange, onSave }) => {
     };
 
     const handleEdit = () => {
-        setIsEditing(!isEditing); // Переключаемся в режим редактирования при нажатии на кнопку "Изменить"
-        setIsSubmitted(false); // Сбрасываем состояние отправки формы
+        setIsEditing(!isEditing);
+        setIsSubmitted(false);
+    };
+
+    const handleSave = (values: typeof initialValues) => {
+        console.log('Сохранено:', values);
+        setIsEditing(false);
+        setSubmittedData(values);
     };
 
     return (
@@ -172,10 +178,10 @@ const DataForm: React.FC<DataFormProps> = ({ onChange, onSave }) => {
                         validationSchema={validationSchema}
                         onSubmit={(values, { setSubmitting }) => {
                             setTimeout(() => {
-                                onSave(values); // Сохраняем данные в базу данных
-                                setIsSubmitted(true); // Помечаем, что форма была отправлена
-                                setIsEditing(false); // Переключаемся в режим просмотра данных
-                                setSubmittedData(values); // Сохраняем отправленные данные для отображения
+                                onSave(values);
+                                setIsSubmitted(true);
+                                setIsEditing(false);
+                                setSubmittedData(values);
                                 setSubmitting(false);
                             }, 500);
                         }}
@@ -227,20 +233,18 @@ const DataForm: React.FC<DataFormProps> = ({ onChange, onSave }) => {
                                     />
                                 </InputFieldWrapper>
                                 <StyledButton type="submit" disabled={formik.isSubmitting}>
-                                    {isSubmitted ? 'Изменить' : 'Сохранить'}
+                                    {isEditing ? 'Сохранить' : 'Изменить'}
                                 </StyledButton>
                             </Form>
                         )}
                     </Formik>
                 ) : (
                     <div>
-                        <StyledLabel htmlFor="sport">Вид спорта</StyledLabel>
+                        {/* Отображаем сохраненные данные */}
                         <div>{submittedData.sport}</div>
-                        <StyledLabel htmlFor="age">Возраст</StyledLabel>
                         <div>{submittedData.age}</div>
-                        <StyledLabel htmlFor="city">Город</StyledLabel>
                         <div>{submittedData.city}</div>
-                        <StyledButton onClick={handleEdit}>Изменить</StyledButton>
+                        <StyledButton onClick={() => setIsEditing(true)}>Изменить</StyledButton>
                     </div>
                 )}
             </DataFormContainer>
