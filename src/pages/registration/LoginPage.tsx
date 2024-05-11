@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import backgroundImage from '../assets/backgroundLogin.jpg';
-import '../styles/log.scss';
-import '../styles/register.scss'
+import backgroundImage from '../../assets/backgroundLogin.jpg';
+import '../../styles/log.scss';
+import '../../styles/register.scss'
 import * as Yup from 'yup';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import RegisterPopup from './RegisterPopup';
+import RegisterPopup from '../registration/RegisterPopup';
 
 interface Values {
     login: string;

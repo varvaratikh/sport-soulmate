@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import BackgroundImage from '../components/images/BackgroundImage';
-import InputField from '../components/InputField';
-import Button from '../components/Button';
-import '../styles/register.scss';
+import BackgroundImage from '../../components/images/BackgroundImage';
+import InputField from '../../components/InputField';
+import Button from '../../components/Button';
+import '../../styles/register.scss';
 
 interface Props {
     isOpen: boolean;
@@ -36,6 +36,9 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
             overlayClassName="overlay"
         >
             <StyledContainer>
+                <CloseButton onClick={onClose}>
+                    <CrossIcon />
+                </CloseButton>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -81,12 +84,12 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                                 />
                                 {formik.touched.confirmPassword && formik.errors.confirmPassword && <div>{formik.errors.confirmPassword}</div>}
                             </FieldContainer>
-                            <StyledButton type="submit" label="Зарегестрироваться" className="register-btn" />
+                            <StyledButton type="submit" label="Зарегистрироваться" className="register-btn" />
                         </Form>
                     )}
                 </Formik>
 
-                <Button label="Close" onClick={onClose} />
+                <Button label="Close" onClick={onClose} className="close-btn" />
             </StyledContainer>
         </StyledModal>
     );
@@ -140,6 +143,38 @@ const StyledButton = styled(Button)`
     margin-top: 20px; 
     color: #4CAF50;
     border: 2px solid #ccc;
+`;
+
+const CloseButton = styled.button`
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: grey;
+`;
+
+const CrossIcon = styled.span`
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transform: rotate(45deg);
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background-color: #000;
+    }
+    &:before {
+        transform: rotate(90deg);
+    }
+    &:after {
+        transform: rotate(180deg);
+    }
 `;
 
 export default RegisterPopup;

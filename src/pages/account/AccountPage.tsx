@@ -1,9 +1,9 @@
 import React from 'react';
-import TopImage from '../components/images/TopImage';
-import formImage from '../assets/form.jpg';
-import UserInfoOverlay from '../components/UserInfoOverlay';
-import userPhoto from "../assets/userPhoto.jpg"
-import DataForm from "../components/DataForm";
+import TopImage from '../../components/images/TopImage';
+import formImage from '../../assets/form.jpg';
+import UserInfoOverlay from './UserInfoOverlay';
+import userPhoto from "../../assets/userPhoto.jpg"
+import DataForm from "./DataForm";
 import { Formik, Form, FormikProps } from 'formik';
 
 const AccountPage: React.FC = () => {
