@@ -116,16 +116,6 @@ const StyledModal = styled(Modal)`
     }
 `;
 
-const StyledBackgroundImage = styled(BackgroundImage)`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: -1;
-`;
-
 const StyledContainer = styled.div`
     text-align: center;
     display: flex;
@@ -141,8 +131,8 @@ const FieldContainer = styled.div`
 
 const StyledButton = styled(Button)`
     margin-top: 20px; 
-    color: #4CAF50;
-    border: 2px solid #ccc;
+    color: cornflowerblue;
+    border: 2px solid cornflowerblue;
 `;
 
 const CloseButton = styled.button`
