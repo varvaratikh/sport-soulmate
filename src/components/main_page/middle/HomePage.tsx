@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface TitleDescriptionProps {
     title: string;
     description: string;
@@ -33,11 +35,10 @@ const TitleDescription: React.FC<TitleDescriptionProps> = ({ title, description,
     );
 };
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
     return (
         <div>
-            <div style={{ backgroundImage: `url(${require('../../../img/main_page/bck.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', height: '184vh' }}>
-
+            <div style={{ backgroundImage: `url(${require('../../../assets/main_page/bck.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', height: '184vh' }}>
                 <div style={{
                     position: 'absolute',
                     top: '965px',
@@ -48,13 +49,15 @@ const HomePage = () => {
                     lineHeight: '51px'
                 }}>
                     SportSoulMate
-                    <span style={{ fontWeight: 'lighter',color: '#fffff' }}> - это онлайн-платформа, где ты можешь найти своего идеального спортивного партнера для игр и тренировок. </span>
+                    <span style={{ fontWeight: 'lighter', color: '#000000' }}>
+                        - это онлайн-платформа, где ты можешь найти своего идеального спортивного партнера для игр и тренировок.
+                    </span>
                 </div>
 
                 <TitleDescription
                     title="Персонализированный поиск"
                     description="Забудь о том, чтобы бесконечно искать подходящего партнера! SportSoulMate предоставляет тебе уникальную возможность настроить фильтры по типу спорта, уровню подготовки и времени."
-                    top={1200 }
+                    top={1200}
                     left={705}
                 />
 

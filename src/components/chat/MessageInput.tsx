@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../styles/MessageInput.module.sass';
+import styles from '../../styles/chat/MessageInput.module.sass';
+
 
 const MessageInput: React.FC = () => {
     return (

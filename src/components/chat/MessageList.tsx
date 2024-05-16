@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/MessageList.module.sass';
+import styles from '../../styles/chat/MessageList.module.sass';
 
 const messages = [
     { text: 'привет, в какой день тебе будет удобно встретиться?', mine: true },

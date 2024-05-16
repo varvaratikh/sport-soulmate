@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/ChatWindow.module.sass';
+import styles from '../../styles/chat/ChatWindow.module.sass';
 
 const ChatWindow: React.FC = () => {
     return (

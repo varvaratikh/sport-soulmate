@@ -1,5 +1,3 @@
-// NewsHomePage.tsx
-
 import React from 'react';
 import './NewsStyle.css';
 
@@ -24,22 +22,22 @@ const NewsHomePage: React.FC = () => {
         {
             title: 'Неудержимый Разгром:',
             description: 'Команда "Молния" разгромила соперников со счетом 5:0',
-            imageUrl: require('../../../img/main_page/news1.jpg')
+            imageUrl: require('../../../assets/main_page/news1.jpg')
         },
         {
             title: 'Спортивный Триумф: ',
             description: 'Звездный игрок установил новый рекорд в набранных очках за матч',
-            imageUrl: require('../../../img/main_page/news2.jpg')
+            imageUrl: require('../../../assets/main_page/news2.jpg')
         },
         {
             title: 'Неожиданное Возвращение: ',
             description: 'Запасная команда обыгрывает фаворитов в захватывающем поединке',
-            imageUrl: require('../../../img/main_page/new3.jpg')
+            imageUrl: require('../../../assets/main_page/new3.jpg')
         },
         {
             title: 'Решающий Момент:',
             description: 'Отличная командная работа приводит к драматической победе в последних минутах игры',
-            imageUrl: require('../../../img/main_page/news4.jpg')
+            imageUrl: require('../../../assets/main_page/news4.jpg')
         },
     ];
 

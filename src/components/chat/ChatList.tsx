@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../styles/ChatList.module.sass';
+import styles from '../../styles/chat/ChatList.module.sass';
+
 
 
 const ChatList: React.FC = () => {
