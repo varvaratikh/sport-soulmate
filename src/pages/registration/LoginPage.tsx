@@ -6,24 +6,27 @@ import * as Yup from 'yup';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import RegisterPopup from '../registration/RegisterPopup';
 
+import Axios from 'axios';
+
 interface Values {
-    login: string;
+    email: string;
     password: string;
 }
 
 const validationSchema = Yup.object({
-    login: Yup.string().required('Обязательное поле'),
+    email: Yup.string().required('Обязательное поле'),
     password: Yup.string().required('Обязательное поле'),
 });
 
 const LoginPage: React.FC = () => {
     const initialValues = {
-        login: '',
+        email: '',
         password: '',
     };
 
     const [showPassword, setShowPassword] = useState(false);
     const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+    const [loginError, setLoginError] = useState(false);
 
     const handleRegisterPopupOpen = () => {
         setIsRegisterPopupOpen(true);
@@ -33,32 +36,45 @@ const LoginPage: React.FC = () => {
         setIsRegisterPopupOpen(false);
     };
 
+    const handleLogin = async (values: Values, { setSubmitting }: any) => {
+        try {
+            const response = await Axios.post('http://localhost:8080/api/users/login', {
+                email: values.email,
+                password: values.password,
+            });
+            console.log('Successful login:', response.data);
+            // Сброс ошибки входа
+            setLoginError(false);
+        } catch (error) {
+            console.error('Login error:', error);
+            setLoginError(true);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
     return (
         <>
             <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 500);
-                    }}
+                    onSubmit={handleLogin} // Изменяем onSubmit на handleLogin
                 >
                     {(formik) => (
                         <Form className="login-form">
+                            {loginError && <div className="error-message">Пользователь с указанными данными не найден</div>}
                             <div className="input-field">
-                                <label htmlFor="login">Логин</label>
-                                <div className={`login-input${formik.errors.login && formik.touched.login ? ' input-error' : ''}`}>
+                                <label htmlFor="email">Email</label>
+                                <div className={`login-input${formik.errors.email && formik.touched.email ? ' input-error' : ''}`}>
                                     <Field
-                                        id="login"
-                                        name="login"
-                                        className={`input-error ${formik.errors.login && formik.touched.login ? 'input-error' : ''}`}
+                                        id="email"
+                                        name="email"
+                                        className={`input-error ${formik.errors.email && formik.touched.email ? 'input-error' : ''}`}
                                     />
                                 </div>
-                                {formik.touched.login && formik.errors.login && (
-                                    <div className="validation-message">{formik.errors.login}</div>
+                                {formik.touched.email && formik.errors.email && (
+                                    <div className="validation-message">{formik.errors.email}</div>
                                 )}
                             </div>
                             <div className="input-field">

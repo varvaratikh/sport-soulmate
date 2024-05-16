@@ -23,10 +23,36 @@ const validationSchema = Yup.object({
 
 const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
     const initialValues = {
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
     };
+
+    const handleSubmit = (values: typeof initialValues, { setSubmitting }: any) => {
+        fetch('http://localhost:8080/api/users/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: values.name,
+                email: values.email,
+                password: values.password,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                setSubmitting(false);
+                onClose();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                setSubmitting(false);
+            });
+    };
+
     return (
         <StyledModal
             isOpen={isOpen}
@@ -42,16 +68,20 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                            onClose();
-                        }, 500);
-                    }}
+                    onSubmit={handleSubmit}
                 >
                     {(formik) => (
                         <Form>
+                            <FieldContainer>
+                                <label htmlFor="name">Name</label>
+                                <InputField
+                                    type="text"
+                                    name="name"
+                                    value={formik.values.name}
+                                    onChange={(value) => formik.setFieldValue('name', value)}
+                                />
+                                {formik.touched.name && formik.errors.name && <div>{formik.errors.name}</div>}
+                            </FieldContainer>
                             <FieldContainer>
                                 <label htmlFor="email">Email</label>
                                 <InputField
@@ -62,7 +92,6 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                                 />
                                 {formik.touched.email && formik.errors.email && <div>{formik.errors.email}</div>}
                             </FieldContainer>
-
                             <FieldContainer>
                                 <label htmlFor="password">Password</label>
                                 <InputField
@@ -73,7 +102,6 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                                 />
                                 {formik.touched.password && formik.errors.password && <div>{formik.errors.password}</div>}
                             </FieldContainer>
-
                             <FieldContainer>
                                 <label htmlFor="confirmPassword">Confirm Password</label>
                                 <InputField
@@ -88,7 +116,6 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                         </Form>
                     )}
                 </Formik>
-
                 <Button label="Close" onClick={onClose} className="close-btn" />
             </StyledContainer>
         </StyledModal>
