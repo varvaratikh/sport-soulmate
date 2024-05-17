@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './header.sass';
+import '../../../styles/header.sass';
 // @ts-ignore
 import logo from '../../../assets/logo-header.png';
 
