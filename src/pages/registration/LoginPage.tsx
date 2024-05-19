@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik'; // Import FormikHelpers for typing setSubmitting
 import backgroundImage from '../../assets/backgroundLogin.jpg';
 import '../../styles/log.scss';
 import * as Yup from 'yup';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import RegisterPopup from '../registration/RegisterPopup';
-
 import Axios from 'axios';
 
 interface Values {
@@ -19,7 +18,7 @@ const validationSchema = Yup.object({
 });
 
 const LoginPage: React.FC = () => {
-    const initialValues = {
+    const initialValues: Values = {
         email: '',
         password: '',
     };
@@ -36,22 +35,39 @@ const LoginPage: React.FC = () => {
         setIsRegisterPopupOpen(false);
     };
 
-    const handleLogin = async (values: Values, { setSubmitting }: any) => {
+    const handleLogin = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
         try {
             const response = await Axios.post('http://localhost:8080/api/users/login', {
                 email: values.email,
                 password: values.password,
             });
-            console.log('Successful login:', response.data);
-            // Сброс ошибки входа
+
+            const { data } = response;
+            // Обработка ответа сервера, например, сохранение токена
+            localStorage.setItem('token', data.token);
             setLoginError(false);
+            window.location.href = '/protected';
         } catch (error) {
-            console.error('Login error:', error);
-            setLoginError(true);
+            setSubmitting(false);
+            if (Axios.isAxiosError(error)) {
+                console.error('Login error:', error);
+                if (error.response && error.response.status === 401) {
+                    setLoginError(true);
+                } else {
+                    console.error('Unexpected error:', error);
+                }
+            } else {
+                console.error('An unexpected error occurred:', error);
+            }
         } finally {
             setSubmitting(false);
         }
     };
+
+
+
+
+
 
     return (
         <>
@@ -59,7 +75,7 @@ const LoginPage: React.FC = () => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={handleLogin} // Изменяем onSubmit на handleLogin
+                    onSubmit={handleLogin}
                 >
                     {(formik) => (
                         <Form className="login-form">
@@ -85,6 +101,7 @@ const LoginPage: React.FC = () => {
                                         name="password"
                                         type={showPassword ? 'text' : 'password'}
                                         className={formik.errors.password && formik.touched.password ? 'input-error' : ''}
+                                        autoComplete="current-password"
                                     />
                                     <button
                                         type="button"
@@ -94,7 +111,6 @@ const LoginPage: React.FC = () => {
                                         {showPassword ? <RiEyeOffFill/> : <RiEyeFill/>}
                                     </button>
                                 </div>
-
                                 {formik.touched.password && formik.errors.password && (
                                     <div className="validation-message">{formik.errors.password}</div>
                                 )}
@@ -104,7 +120,7 @@ const LoginPage: React.FC = () => {
                                     Войти
                                 </button>
                                 <span className="text">Ещё не создали аккаунт?</span>
-                                <button onClick={handleRegisterPopupOpen} className="register-button">Регистрация</button>
+                                <button type="button" onClick={handleRegisterPopupOpen} className="register-button">Регистрация</button>
                             </div>
                         </Form>
                     )}
@@ -114,6 +130,5 @@ const LoginPage: React.FC = () => {
         </>
     );
 };
-
 
 export default LoginPage;

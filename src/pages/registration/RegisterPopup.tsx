@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
-import BackgroundImage from '../../components/images/BackgroundImage';
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import '../../styles/register.scss';
@@ -11,6 +10,13 @@ import '../../styles/register.scss';
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+}
+
+interface FormValues {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
 
 const validationSchema = Yup.object({
@@ -22,14 +28,23 @@ const validationSchema = Yup.object({
 });
 
 const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
-    const initialValues = {
+    const [internalOpen, setInternalOpen] = useState(isOpen);
+
+    useEffect(() => {
+        setInternalOpen(isOpen);
+    }, [isOpen]);
+
+    const initialValues: FormValues = {
         name: '',
         email: '',
         password: '',
         confirmPassword: '',
     };
 
-    const handleSubmit = (values: typeof initialValues, { setSubmitting }: any) => {
+    const handleSubmit = (
+        values: FormValues,
+        { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    ) => {
         fetch('http://localhost:8080/api/users/register', {
             method: 'POST',
             headers: {
@@ -41,11 +56,18 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                 password: values.password,
             }),
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            })
             .then(data => {
                 console.log('Success:', data);
                 setSubmitting(false);
-                onClose();
+                onClose(); // Закрываем попап после успешной регистрации
+                window.location.href = '/home'; // Перенаправляем пользователя на главную страницу
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -53,9 +75,10 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
             });
     };
 
+
     return (
         <StyledModal
-            isOpen={isOpen}
+            isOpen={internalOpen}
             onRequestClose={onClose}
             contentLabel="Register"
             ariaHideApp={false}
@@ -139,7 +162,7 @@ const StyledModal = styled(Modal)`
     text-align: center;
 
     .overlay {
-        background-color: rgba(0, 0, 0, 0.5); 
+        background-color: rgba(0, 0, 0, 0.5);
     }
 `;
 
@@ -157,7 +180,7 @@ const FieldContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-    margin-top: 20px; 
+    margin-top: 20px;
     color: cornflowerblue;
     border: 2px solid cornflowerblue;
 `;
