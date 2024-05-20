@@ -1,39 +1,32 @@
 import React from 'react';
+import { useChatContext } from '../../contexts/ChatContext';
 import styles from '../../styles/chat/ChatList.module.sass';
 
-
-
 const ChatList: React.FC = () => {
-    const chats = [
-        { name: 'Лена', message: 'Сегодня в 13?', time: '17:34', online: true, unread: 4 }
-    ];
+    const { contacts, setSelectedContact } = useChatContext();
 
     return (
         <div className={styles.chatList}>
             <h2 className={styles.title}>Избранное</h2>
             <div className={styles.favorites}>
-                {chats.map((chat, index) => (
-                    <div key={index} className={styles.favorite}>
-                        <img src="../../assets/chat/avatar.png" alt={chat.name} />
-                        <span>{chat.name}</span>
+                {contacts.map((contact) => (
+                    <div key={contact.id} className={styles.favorite} onClick={() => setSelectedContact(contact)}>
+                        <img src="../../assets/chat/avatar.png" alt={contact.name} />
+                        <span>{contact.name}</span>
                     </div>
                 ))}
             </div>
             <h2 className={styles.title}>Сообщения</h2>
             <div className={styles.messages}>
-                {chats.map((chat, index) => (
-                    <div key={index} className={styles.chat}>
+                {contacts.map((contact) => (
+                    <div key={contact.id} className={styles.chat} onClick={() => setSelectedContact(contact)}>
                         <div className={styles.avatarContainer}>
-                            <img src="../../assets/chat/avatar.png" alt={chat.name} className={styles.avatar} />
-                            <span className={chat.online ? styles.online : styles.offline}></span>
+                            <img src="../../assets/chat/avatar.png" alt={contact.name} className={styles.avatar} />
+                            <span className={styles.online}></span>
                         </div>
                         <div className={styles.chatInfo}>
-                            <span className={styles.name}>{chat.name}</span>
-                            <span className={styles.lastMessage}>{chat.message}</span>
-                        </div>
-                        <div className={styles.chatMeta}>
-                            <span className={styles.time}>{chat.time}</span>
-                            {chat.unread > 0 && <span className={styles.unread}>{chat.unread}</span>}
+                            <span className={styles.name}>{contact.name}</span>
+                            <span className={styles.lastMessage}></span>
                         </div>
                     </div>
                 ))}

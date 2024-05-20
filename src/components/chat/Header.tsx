@@ -6,13 +6,15 @@ import About from '../../pages/About';
 import Chat from '../../pages/chat/App';
 import SearchPage from '../../pages/search/SearchPage';
 import NewsHomePage from '../../components/main_page/news_fragment/NewsHomePage';
+// @ts-ignore
+import logo from "../../assets/chat/logo_black.png";
 
 
 const Header: React.FC = () => {
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-                <img src="../../assets/chat/logo_black.png" alt="SportSoulMate" />
+                <img src={logo} alt="Logo" className="logo"/>
             </div>
             <nav>
                 <Link to="/" className="nav-link">Главная</Link>
