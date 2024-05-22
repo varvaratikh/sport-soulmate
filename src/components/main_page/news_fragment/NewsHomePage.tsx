@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './NewsStyle.css';
 import { getSportsNews } from './api/newsApi';
 import { translateText } from './api/translateApi';
+import NewsItem from './NewsItem';
+import NewsModal from './NewsModal';
 
 interface NewsItemProps {
     title: string;
@@ -9,19 +11,10 @@ interface NewsItemProps {
     imageUrl: string;
 }
 
-const NewsItem: React.FC<NewsItemProps> = ({ title, description, imageUrl }) => {
-    return (
-        <div className="news-item">
-            <img src={imageUrl} alt="News" />
-            <div className="news-title">{title}</div>
-            <div className="news-description">{description}</div>
-        </div>
-    );
-};
-
 const NewsHomePage: React.FC = () => {
     const [newsData, setNewsData] = useState<NewsItemProps[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [selectedNews, setSelectedNews] = useState<NewsItemProps | null>(null);
 
     useEffect(() => {
         const fetchAndTranslateNews = async () => {
@@ -45,6 +38,14 @@ const NewsHomePage: React.FC = () => {
         fetchAndTranslateNews();
     }, []);
 
+    const handleNewsClick = (news: NewsItemProps) => {
+        setSelectedNews(news);
+    };
+
+    const closeModal = () => {
+        setSelectedNews(null);
+    };
+
     if (loading) {
         return <div className="loading">Загрузка...</div>;
     }
@@ -54,9 +55,23 @@ const NewsHomePage: React.FC = () => {
             <h1 className="news-homepage-title">Новости спортивных событий</h1>
             <div className="news-grid">
                 {newsData.map((news, index) => (
-                    <NewsItem key={index} title={news.title} description={news.description} imageUrl={news.imageUrl} />
+                    <NewsItem
+                        key={index}
+                        title={news.title}
+                        description={news.description}
+                        imageUrl={news.imageUrl}
+                        onClick={() => handleNewsClick(news)}
+                    />
                 ))}
             </div>
+            {selectedNews &&
+                <NewsModal
+                    title={selectedNews.title}
+                    description={selectedNews.description}
+                    imageUrl={selectedNews.imageUrl}
+                    onClose={closeModal}
+                />
+            }
         </div>
     );
 };
