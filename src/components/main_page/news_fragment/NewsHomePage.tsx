@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './NewsStyle.css';
+import { getSportsNews } from './api/newsApi';
+import { translateText } from './api/translateApi';
 
 interface NewsItemProps {
     title: string;
@@ -18,28 +20,34 @@ const NewsItem: React.FC<NewsItemProps> = ({ title, description, imageUrl }) => 
 };
 
 const NewsHomePage: React.FC = () => {
-    const newsData: NewsItemProps[] = [
-        {
-            title: 'Неудержимый Разгром:',
-            description: 'Команда "Молния" разгромила соперников со счетом 5:0',
-            imageUrl: require('../../../assets/main_page/news1.jpg')
-        },
-        {
-            title: 'Спортивный Триумф: ',
-            description: 'Звездный игрок установил новый рекорд в набранных очках за матч',
-            imageUrl: require('../../../assets/main_page/news2.jpg')
-        },
-        {
-            title: 'Неожиданное Возвращение: ',
-            description: 'Запасная команда обыгрывает фаворитов в захватывающем поединке',
-            imageUrl: require('../../../assets/main_page/new3.jpg')
-        },
-        {
-            title: 'Решающий Момент:',
-            description: 'Отличная командная работа приводит к драматической победе в последних минутах игры',
-            imageUrl: require('../../../assets/main_page/news4.jpg')
-        },
-    ];
+    const [newsData, setNewsData] = useState<NewsItemProps[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const fetchAndTranslateNews = async () => {
+            setLoading(true);
+            const articles = await getSportsNews();
+            const translatedNewsPromises = articles.slice(0, 4).map(async (article: any) => {
+                const translatedTitle = await translateText(article.title);
+                const translatedDescription = await translateText(article.description);
+                return {
+                    title: translatedTitle,
+                    description: translatedDescription,
+                    imageUrl: article.urlToImage || 'https://assets.gq.ru/photos/5d9f4eb4cd5287000832917d/master/w_1600%2Cc_limit/07.jpg',
+                };
+            });
+
+            const translatedNews = await Promise.all(translatedNewsPromises);
+            setNewsData(translatedNews);
+            setLoading(false);
+        };
+
+        fetchAndTranslateNews();
+    }, []);
+
+    if (loading) {
+        return <div className="loading">Загрузка...</div>;
+    }
 
     return (
         <div className="news-homepage">
