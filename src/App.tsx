@@ -13,7 +13,6 @@ import SearchPage from "./pages/search/SearchPage";
 const App: React.FC = () => {
     return (
         <Router>
-            <Header />
             <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/home" element={<Home />} />
