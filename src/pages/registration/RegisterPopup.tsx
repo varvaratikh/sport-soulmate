@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import * as Yup from 'yup';
-import { Formik, Form, Field } from 'formik';
-import BackgroundImage from '../../components/images/BackgroundImage';
+import {Formik, Form, Field, FormikHelpers} from 'formik';
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import '../../styles/register.scss';
+import Axios from "axios";
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+}
+
+interface FormValues {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
 }
 
 const validationSchema = Yup.object({
@@ -22,11 +29,30 @@ const validationSchema = Yup.object({
 });
 
 const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
-    const initialValues = {
+    const initialValues: FormValues = {
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
     };
+
+    const handleSubmit = async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
+        try {
+            const response = await Axios.post('http://localhost:8080/api/users/register', {
+                name: values.name,
+                email: values.email,
+                password: values.password,
+            });
+            console.log('Success:', response.data);
+            setSubmitting(false);
+            onClose();
+            window.location.href = '/home';
+        } catch (error) {
+            console.error('Error:', error);
+            setSubmitting(false);
+        }
+    };
+
     return (
         <StyledModal
             isOpen={isOpen}
@@ -42,16 +68,20 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                            onClose();
-                        }, 500);
-                    }}
+                    onSubmit={handleSubmit}
                 >
                     {(formik) => (
                         <Form>
+                            <FieldContainer>
+                                <label htmlFor="name">Name</label>
+                                <InputField
+                                    type="text"
+                                    name="name"
+                                    value={formik.values.name}
+                                    onChange={(value) => formik.setFieldValue('name', value)}
+                                />
+                                {formik.touched.name && formik.errors.name && <div>{formik.errors.name}</div>}
+                            </FieldContainer>
                             <FieldContainer>
                                 <label htmlFor="email">Email</label>
                                 <InputField
@@ -62,7 +92,6 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                                 />
                                 {formik.touched.email && formik.errors.email && <div>{formik.errors.email}</div>}
                             </FieldContainer>
-
                             <FieldContainer>
                                 <label htmlFor="password">Password</label>
                                 <InputField
@@ -73,7 +102,6 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                                 />
                                 {formik.touched.password && formik.errors.password && <div>{formik.errors.password}</div>}
                             </FieldContainer>
-
                             <FieldContainer>
                                 <label htmlFor="confirmPassword">Confirm Password</label>
                                 <InputField
@@ -88,12 +116,12 @@ const RegisterPopup: React.FC<Props> = ({ isOpen, onClose }) => {
                         </Form>
                     )}
                 </Formik>
-
                 <Button label="Close" onClick={onClose} className="close-btn" />
             </StyledContainer>
         </StyledModal>
     );
 };
+
 
 const StyledModal = styled(Modal)`
     position: fixed;
@@ -112,7 +140,7 @@ const StyledModal = styled(Modal)`
     text-align: center;
 
     .overlay {
-        background-color: rgba(0, 0, 0, 0.5); 
+        background-color: rgba(0, 0, 0, 0.5);
     }
 `;
 
@@ -130,7 +158,7 @@ const FieldContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-    margin-top: 20px; 
+    margin-top: 20px;
     color: cornflowerblue;
     border: 2px solid cornflowerblue;
 `;

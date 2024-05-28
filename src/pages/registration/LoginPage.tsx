@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik'; // Import FormikHelpers for typing setSubmitting
 import backgroundImage from '../../assets/backgroundLogin.jpg';
 import '../../styles/log.scss';
 import * as Yup from 'yup';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import RegisterPopup from '../registration/RegisterPopup';
+import Axios from 'axios';
 
 interface Values {
-    login: string;
+    email: string;
     password: string;
 }
 
 const validationSchema = Yup.object({
-    login: Yup.string().required('Обязательное поле'),
+    email: Yup.string().required('Обязательное поле'),
     password: Yup.string().required('Обязательное поле'),
 });
 
 const LoginPage: React.FC = () => {
-    const initialValues = {
-        login: '',
+    const initialValues: Values = {
+        email: '',
         password: '',
     };
 
     const [showPassword, setShowPassword] = useState(false);
     const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+    const [loginError, setLoginError] = useState(false);
 
     const handleRegisterPopupOpen = () => {
         setIsRegisterPopupOpen(true);
@@ -33,32 +35,61 @@ const LoginPage: React.FC = () => {
         setIsRegisterPopupOpen(false);
     };
 
+    const handleLogin = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+        try {
+            const response = await Axios.post('http://localhost:8080/api/users/login', {
+                email: values.email,
+                password: values.password,
+            });
+
+            const { data } = response;
+            localStorage.setItem('token', data.token);
+            setLoginError(false);
+            window.location.href = '/protected';
+        } catch (error) {
+            setSubmitting(false);
+            if (Axios.isAxiosError(error)) {
+                console.error('Login error:', error);
+                if (error.response && error.response.status === 401) {
+                    setLoginError(true);
+                } else {
+                    console.error('Unexpected error:', error);
+                }
+            } else {
+                console.error('An unexpected error occurred:', error);
+            }
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+
+
+
+
+
     return (
         <>
             <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 500);
-                    }}
+                    onSubmit={handleLogin}
                 >
                     {(formik) => (
                         <Form className="login-form">
+                            {loginError && <div className="error-message">Пользователь с указанными данными не найден</div>}
                             <div className="input-field">
-                                <label htmlFor="login">Логин</label>
-                                <div className={`login-input${formik.errors.login && formik.touched.login ? ' input-error' : ''}`}>
+                                <label htmlFor="email">Email</label>
+                                <div className={`login-input${formik.errors.email && formik.touched.email ? ' input-error' : ''}`}>
                                     <Field
-                                        id="login"
-                                        name="login"
-                                        className={`input-error ${formik.errors.login && formik.touched.login ? 'input-error' : ''}`}
+                                        id="email"
+                                        name="email"
+                                        className={`input-error ${formik.errors.email && formik.touched.email ? 'input-error' : ''}`}
                                     />
                                 </div>
-                                {formik.touched.login && formik.errors.login && (
-                                    <div className="validation-message">{formik.errors.login}</div>
+                                {formik.touched.email && formik.errors.email && (
+                                    <div className="validation-message">{formik.errors.email}</div>
                                 )}
                             </div>
                             <div className="input-field">
@@ -69,6 +100,7 @@ const LoginPage: React.FC = () => {
                                         name="password"
                                         type={showPassword ? 'text' : 'password'}
                                         className={formik.errors.password && formik.touched.password ? 'input-error' : ''}
+                                        autoComplete="current-password"
                                     />
                                     <button
                                         type="button"
@@ -78,7 +110,6 @@ const LoginPage: React.FC = () => {
                                         {showPassword ? <RiEyeOffFill/> : <RiEyeFill/>}
                                     </button>
                                 </div>
-
                                 {formik.touched.password && formik.errors.password && (
                                     <div className="validation-message">{formik.errors.password}</div>
                                 )}
@@ -88,7 +119,7 @@ const LoginPage: React.FC = () => {
                                     Войти
                                 </button>
                                 <span className="text">Ещё не создали аккаунт?</span>
-                                <button onClick={handleRegisterPopupOpen} className="register-button">Регистрация</button>
+                                <button type="button" onClick={handleRegisterPopupOpen} className="register-button">Регистрация</button>
                             </div>
                         </Form>
                     )}
@@ -98,6 +129,5 @@ const LoginPage: React.FC = () => {
         </>
     );
 };
-
 
 export default LoginPage;
