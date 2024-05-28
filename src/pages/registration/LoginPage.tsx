@@ -43,7 +43,6 @@ const LoginPage: React.FC = () => {
             });
 
             const { data } = response;
-            // Обработка ответа сервера, например, сохранение токена
             localStorage.setItem('token', data.token);
             setLoginError(false);
             window.location.href = '/protected';
