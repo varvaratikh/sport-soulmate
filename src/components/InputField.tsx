@@ -24,7 +24,7 @@ const InputField: React.FC<InputFieldProps> = ({
     };
 
     return (
-        <div className={`input-field ${error ? 'error' : ''} ${className || ''}`}>
+        <div className={`input-field in ${error ? 'error' : ''} ${className || ''}`}>
             <label htmlFor={name} style={{marginBottom: '10px'}}>{label}</label>
             <input
                 type={type}
@@ -35,14 +35,13 @@ const InputField: React.FC<InputFieldProps> = ({
                 className={error ? 'input-error' : ''}
                 style={{
                     height: '45px',
-                    paddingLeft: '25px',
-                    paddingRight: '25px',
+                    padding: '0 25px',
                     fontSize: 18,
                     borderRadius: '20px',
                     border: '1px solid #ccc'
                 }}
             />
-            {error && <div className="validation-message">{error}</div>}
+            {error && <p className="validation-message">{error}</p>}
         </div>
     );
 };

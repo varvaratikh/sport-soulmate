@@ -1,7 +1,9 @@
-// NewsHomePage.tsx
-
-import React from 'react';
-import './NewsStyle.css';
+import React, { useEffect, useState } from 'react';
+import './NewsStyle.sass';
+import { getSportsNews } from './api/newsApi';
+import { translateText } from './api/translateApi';
+import NewsItem from './NewsItem';
+import NewsModal from './NewsModal';
 
 interface NewsItemProps {
     title: string;
@@ -9,48 +11,67 @@ interface NewsItemProps {
     imageUrl: string;
 }
 
-const NewsItem: React.FC<NewsItemProps> = ({ title, description, imageUrl }) => {
-    return (
-        <div className="news-item">
-            <img src={imageUrl} alt="News" />
-            <div className="news-title">{title}</div>
-            <div className="news-description">{description}</div>
-        </div>
-    );
-};
-
 const NewsHomePage: React.FC = () => {
-    const newsData: NewsItemProps[] = [
-        {
-            title: 'Неудержимый Разгром:',
-            description: 'Команда "Молния" разгромила соперников со счетом 5:0',
-            imageUrl: require('../../../img/main_page/news1.jpg')
-        },
-        {
-            title: 'Спортивный Триумф: ',
-            description: 'Звездный игрок установил новый рекорд в набранных очках за матч',
-            imageUrl: require('../../../img/main_page/news2.jpg')
-        },
-        {
-            title: 'Неожиданное Возвращение: ',
-            description: 'Запасная команда обыгрывает фаворитов в захватывающем поединке',
-            imageUrl: require('../../../img/main_page/new3.jpg')
-        },
-        {
-            title: 'Решающий Момент:',
-            description: 'Отличная командная работа приводит к драматической победе в последних минутах игры',
-            imageUrl: require('../../../img/main_page/news4.jpg')
-        },
-    ];
+    const [newsData, setNewsData] = useState<NewsItemProps[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [selectedNews, setSelectedNews] = useState<NewsItemProps | null>(null);
+
+    useEffect(() => {
+        const fetchAndTranslateNews = async () => {
+            setLoading(true);
+            const articles = await getSportsNews();
+            const translatedNewsPromises = articles.slice(0, 4).map(async (article: any) => {
+                const translatedTitle = await translateText(article.title);
+                const translatedDescription = await translateText(article.description);
+                return {
+                    title: translatedTitle,
+                    description: translatedDescription,
+                    imageUrl: article.urlToImage || 'https://assets.gq.ru/photos/5d9f4eb4cd5287000832917d/master/w_1600%2Cc_limit/07.jpg',
+                };
+            });
+
+            const translatedNews = await Promise.all(translatedNewsPromises);
+            setNewsData(translatedNews);
+            setLoading(false);
+        };
+
+        fetchAndTranslateNews();
+    }, []);
+
+    const handleNewsClick = (news: NewsItemProps) => {
+        setSelectedNews(news);
+    };
+
+    const closeModal = () => {
+        setSelectedNews(null);
+    };
+
+    if (loading) {
+        return <div className="loading">Загрузка...</div>;
+    }
 
     return (
         <div className="news-homepage">
             <h1 className="news-homepage-title">Новости спортивных событий</h1>
             <div className="news-grid">
                 {newsData.map((news, index) => (
-                    <NewsItem key={index} title={news.title} description={news.description} imageUrl={news.imageUrl} />
+                    <NewsItem
+                        key={index}
+                        title={news.title}
+                        description={news.description}
+                        imageUrl={news.imageUrl}
+                        onClick={() => handleNewsClick(news)}
+                    />
                 ))}
             </div>
+            {selectedNews &&
+                <NewsModal
+                    title={selectedNews.title}
+                    description={selectedNews.description}
+                    imageUrl={selectedNews.imageUrl}
+                    onClose={closeModal}
+                />
+            }
         </div>
     );
 };

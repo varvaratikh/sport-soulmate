@@ -1,0 +1,26 @@
+@import 'variables'
+
+.messageList
+  display: flex
+  flex-direction: column
+  padding: 10px
+
+  .myMessage,
+  .theirMessage
+    max-width: 60%
+    padding: 10px
+    border-radius: 15px
+    margin-bottom: 10px
+    position: relative
+
+  .myMessage
+    align-self: flex-end
+    background-color: white
+    color: $font-color
+    box-shadow: $box-shadow
+
+  .theirMessage
+    align-self: flex-start
+    background-color: $primary-color
+    color: white
+    box-shadow: $box-shadow
