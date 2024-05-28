@@ -17,10 +17,10 @@ const Header: React.FC = () => {
                 <img src={logo} alt="Logo" className="logo"/>
                 <div className="nav-links">
                     <Link to="/home" className="nav-link">Главная</Link>
-                    <Link to="/about" className="nav-link">О нас</Link>
+                    <a href="#about-section" className="nav-link">О нас</a>
                     <Link to="/chat" className="nav-link">Чат</Link>
                     <Link to="/search" className="nav-link">Поиск</Link>
-                    <Link to="/news" className="nav-link">Новости</Link>
+                    <a href="#news-section" className="nav-link">Новости</a>
                 </div>
             </nav>
             <button className="button" onClick={handleLoginClick}>Войти</button>

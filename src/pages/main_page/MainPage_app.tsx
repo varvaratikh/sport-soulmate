@@ -9,8 +9,12 @@ const MainPage_app: React.FC = () => {
         <div>
             <Header />
             <Beginning_main_page />
-            <HomePage />
-            <NewsHomePage />
+            <div id="about-section">
+                <HomePage />
+            </div>
+            <div id="news-section">
+                <NewsHomePage />
+            </div>
         </div>
     );
 };
