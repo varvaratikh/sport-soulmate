@@ -9,8 +9,12 @@ const Header: React.FC = () => {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
 
-    const handleLoginClick = () => {
-        navigate('/');
+    const handleButtonClick = () => {
+        if (isAuthenticated) {
+            navigate('/account');
+        } else {
+            navigate('/');
+        }
     };
 
     const handleChatClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -32,7 +36,9 @@ const Header: React.FC = () => {
                     <a href="#news-section" className="nav-link">Новости</a>
                 </div>
             </nav>
-            <button className="button" onClick={handleLoginClick}>Войти</button>
+            <button className="button" onClick={handleButtonClick}>
+                {isAuthenticated ? 'Личный кабинет' : 'Войти'}
+            </button>
         </header>
     );
 };

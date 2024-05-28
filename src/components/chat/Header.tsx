@@ -11,18 +11,19 @@ import logo from "../../assets/chat/logo_black.png";
 
 
 const Header: React.FC = () => {
+
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
                 <img src={logo} alt="Logo" className="logo"/>
             </div>
-            <nav>
-                <Link to="/" className="nav-link">Главная</Link>
-                <Link to="/about" className="nav-link">О нас</Link>
-                <Link to="/chat" className="nav-link">Чат</Link>
+            <div className="nav-links">
+                <Link to="/home" className="nav-link">Главная</Link>
+                <a href="#about-section" className="nav-link">О нас</a>
+                <Link to="/chat" className="nav-link" >Чат</Link>
                 <Link to="/search" className="nav-link">Поиск</Link>
-                <Link to="/news" className="nav-link">Новости</Link>
-            </nav>
+                <a href="#news-section" className="nav-link">Новости</a>
+            </div>
         </header>
     );
 };
