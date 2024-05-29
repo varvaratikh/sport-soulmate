@@ -1,29 +1,47 @@
-import React from 'react';
-import { useChatContext } from '../../contexts/ChatContext';
-import styles from '../../styles/chat/ChatWindow.module.sass';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 
-const ChatWindow: React.FC = () => {
-    const { selectedContact } = useChatContext();
+interface Message {
+    id: number;
+    sender: string;
+    content: string;
+}
 
-    if (!selectedContact) {
-        return <div className={styles.chatWindow}>Выберите контакт, чтобы начать чат</div>;
-    }
+const ChatWindow: React.FC = () => {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/messages')
+            .then(response => {
+                setMessages(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('There was an error fetching messages!', error);
+            });
+    }, []);
+
+    const sendMessage = (message: { sender: string; content: string }) => {
+        axios.post('http://localhost:8080/messages', message)
+            .then(response => {
+                setMessages([...messages, response.data]);
+            })
+            .catch(error => {
+                console.error('There was an error sending the message!', error);
+            });
+    };
 
     return (
-        <div className={styles.chatWindow}>
-            <div className={styles.header}>
-                <img src="../../assets/chat/avatar.png" alt={selectedContact.name} />
-                <div className={styles.info}>
-                    <span className={styles.name}>{selectedContact.name}</span>
-                    <span className={styles.status}>
-            <span className={styles.online}></span> Онлайн
-          </span>
-                </div>
-            </div>
-            <MessageList />
-            <MessageInput />
+        <div className="chat-window">
+            {loading ? (
+                <p>Loading messages...</p>
+            ) : (
+                <MessageList messages={messages} />
+            )}
+            <MessageInput onSendMessage={sendMessage} />
         </div>
     );
 };

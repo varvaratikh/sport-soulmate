@@ -1,38 +1,26 @@
 import React, { useState } from 'react';
-import { useChatContext } from '../../contexts/ChatContext';
-import axios from 'axios';
-import styles from '../../styles/chat/MessageInput.module.sass';
 
-const MessageInput: React.FC = () => {
-    const [text, setText] = useState('');
-    const { selectedContact, setMessages } = useChatContext();
+interface MessageInputProps {
+    onSendMessage: (message: { sender: string; content: string }) => void;
+}
+
+const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
+    const [message, setMessage] = useState('');
 
     const handleSend = () => {
-        if (text.trim() !== '' && selectedContact) {
-            const newMessage = {
-                text,
-                sender: 'me',
-                contactId: selectedContact.id,
-            };
-
-            axios.post('/api/messages', newMessage)
-                .then(response => {
-                    setMessages(prevMessages => [...prevMessages, response.data]);
-                    setText('');
-                })
-                .catch(error => {
-                    console.error('Error sending message:', error);
-                });
+        if (message.trim() !== '') {
+            onSendMessage({ sender: 'You', content: message });
+            setMessage('');
         }
     };
 
     return (
-        <div className={styles.messageInput}>
+        <div className="message-input">
             <input
                 type="text"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
                 placeholder="Написать сообщение..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
             />
             <button onClick={handleSend}>Отправить</button>
         </div>

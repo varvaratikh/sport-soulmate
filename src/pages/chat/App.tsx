@@ -1,43 +1,30 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import Header from '../../components/chat/Header';
-import SearchBar from '../../components/chat/SearchBar';
-import ChatList from '../../components/chat/ChatList';
+import React from 'react';
 import ChatWindow from '../../components/chat/ChatWindow';
-import { ChatProvider } from '../../contexts/ChatContext';
-import styles from '../../styles/chat/App.module.sass';
+import '../../styles/chat/App.sass';
+import Header from '../../components/chat/Header'
 
-const Chat: React.FC = () => {
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/');
-        }
-    }, [isAuthenticated, navigate]);
-
-    if (!isAuthenticated) {
-        return null;
-    }
-
+const App: React.FC = () => {
     return (
-        <ChatProvider>
-            <div className={styles.app}>
-                <Header />
-                <div className={styles.content}>
-                    <aside>
-                        <SearchBar />
-                        <ChatList />
-                    </aside>
-                    <main>
-                        <ChatWindow />
-                    </main>
-                </div>
+        <div className="App">
+            <Header/>
+            <div className="content">
+                <aside>
+                    <input type="text" placeholder="Поиск" className="search-bar" />
+                    <div className="favorites">
+                        <h2>Избранное</h2>
+                        {/* Favorites go here */}
+                    </div>
+                    <div className="messages">
+                        <h2>Сообщения</h2>
+                        {/* Messages go here */}
+                    </div>
+                </aside>
+                <main>
+                    <ChatWindow />
+                </main>
             </div>
-        </ChatProvider>
+        </div>
     );
 };
 
-export default Chat;
+export default App;

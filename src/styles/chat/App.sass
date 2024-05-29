@@ -1,0 +1,101 @@
+.App
+  text-align: center
+  display: flex
+  flex-direction: column
+
+
+.App-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 20px
+  background-color: #282c34
+  color: white
+
+
+.App-logo
+  height: 40px
+
+
+nav a
+  color: white
+  margin: 0 15px
+  text-decoration: none
+
+
+.content
+  display: flex
+  flex-direction: row
+  height: calc(100vh - 60px)
+
+
+aside
+  width: 300px
+  padding: 20px
+  background-color: #f5f5f5
+
+
+.search-bar
+  width: 100%
+  padding: 10px
+  margin-bottom: 20px
+  border: 1px solid #ccc
+  border-radius: 5px
+
+
+.favorites h2,
+.messages h2
+  margin-bottom: 10px
+
+
+.message-list
+  flex: 1
+  overflow-y: auto
+
+
+.message
+  padding: 10px
+  margin: 5px
+  border-radius: 5px
+
+
+.message.sent
+  background-color: #0047FF
+  color: white
+  text-align: right
+
+
+.message.received
+  background-color: #f1f1f1
+
+
+.message-input
+  display: flex
+  border-top: 1px solid #ccc
+  padding: 10px
+
+
+.message-input input
+  flex: 1
+  padding: 10px
+  border: 1px solid #ccc
+  border-radius: 5px
+  margin-right: 10px
+
+
+.message-input button
+  padding: 10px 20px
+  border: none
+  border-radius: 5px
+  background-color: #0047FF
+  color: white
+  cursor: pointer
+
+
+.chat-window
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  height: 100%
+  background-color: #fff
+

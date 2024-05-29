@@ -1,15 +1,21 @@
 import React from 'react';
-import { useChatContext } from '../../contexts/ChatContext';
-import styles from '../../styles/chat/MessageList.module.sass';
 
-const MessageList: React.FC = () => {
-    const { messages } = useChatContext();
+interface Message {
+    id: number;
+    sender: string;
+    content: string;
+}
 
+interface MessageListProps {
+    messages: Message[];
+}
+
+const MessageList: React.FC<MessageListProps> = ({ messages }) => {
     return (
-        <div className={styles.messageList}>
-            {messages.map((msg, index) => (
-                <div key={index} className={msg.sender === 'me' ? styles.myMessage : styles.theirMessage}>
-                    {msg.text}
+        <div className="message-list">
+            {messages.map((message) => (
+                <div key={message.id} className={`message ${message.sender === 'You' ? 'sent' : 'received'}`}>
+                    <p>{message.content}</p>
                 </div>
             ))}
         </div>
