@@ -1,11 +1,10 @@
-// src/pages/registration/RegisterPopup.tsx
 import React from 'react';
 import Modal from 'react-modal';
 import * as Yup from 'yup';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 import Axios from 'axios';
-import './register.scss'; // Make sure the path is correct
+import './register.scss';
 
 interface Props {
     isOpen: boolean;

@@ -1,4 +1,3 @@
-// src/pages/registration/login/LoginPage.tsx
 import React, { useState } from 'react';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import backgroundImage from '../../../assets/backgroundLogin.jpg';
