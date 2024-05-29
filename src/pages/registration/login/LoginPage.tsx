@@ -1,11 +1,14 @@
+// src/pages/registration/login/LoginPage.tsx
 import React, { useState } from 'react';
-import { Formik, Form, Field, FormikHelpers } from 'formik'; // Import FormikHelpers for typing setSubmitting
-import backgroundImage from '../../assets/backgroundLogin.jpg';
-import '../../styles/log.scss';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
+import backgroundImage from '../../../assets/backgroundLogin.jpg';
+import './log.scss';
 import * as Yup from 'yup';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
-import RegisterPopup from '../registration/RegisterPopup';
 import Axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import RegisterPopup from "../registration/RegisterPopup";
+import { useAuth } from "../../../contexts/AuthContext";
 
 interface Values {
     email: string;
@@ -18,22 +21,18 @@ const validationSchema = Yup.object({
 });
 
 const LoginPage: React.FC = () => {
-    const initialValues: Values = {
-        email: '',
-        password: '',
-    };
-
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
     const [showPassword, setShowPassword] = useState(false);
     const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
     const [loginError, setLoginError] = useState(false);
 
-    const handleRegisterPopupOpen = () => {
-        setIsRegisterPopupOpen(true);
-    };
+    const initialValues: Values = { email: '', password: '' };
+    const from = location.state?.from?.pathname || '/home';
 
-    const handleRegisterPopupClose = () => {
-        setIsRegisterPopupOpen(false);
-    };
+    const handleRegisterPopupOpen = () => setIsRegisterPopupOpen(true);
+    const handleRegisterPopupClose = () => setIsRegisterPopupOpen(false);
 
     const handleLogin = async (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
         try {
@@ -41,52 +40,33 @@ const LoginPage: React.FC = () => {
                 email: values.email,
                 password: values.password,
             });
-
             const { data } = response;
-            localStorage.setItem('token', data.token);
+            login(data.token);
             setLoginError(false);
-            window.location.href = '/protected';
+            navigate(from, { replace: true });
         } catch (error) {
             setSubmitting(false);
-            if (Axios.isAxiosError(error)) {
-                console.error('Login error:', error);
-                if (error.response && error.response.status === 401) {
-                    setLoginError(true);
-                } else {
-                    console.error('Unexpected error:', error);
-                }
+            if (Axios.isAxiosError(error) && error.response?.status === 401) {
+                setLoginError(true);
             } else {
-                console.error('An unexpected error occurred:', error);
+                console.error('Login error:', error);
             }
         } finally {
             setSubmitting(false);
         }
     };
 
-
-
-
-
-
     return (
         <>
             <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={handleLogin}
-                >
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLogin}>
                     {(formik) => (
                         <Form className="login-form">
                             {loginError && <div className="error-message">Пользователь с указанными данными не найден</div>}
                             <div className="input-field">
                                 <label htmlFor="email">Email</label>
                                 <div className={`login-input${formik.errors.email && formik.touched.email ? ' input-error' : ''}`}>
-                                    <Field
-                                        id="email"
-                                        name="email"
-                                        className={`input-error ${formik.errors.email && formik.touched.email ? 'input-error' : ''}`}
-                                    />
+                                    <Field id="email" name="email" className={`input-error ${formik.errors.email && formik.touched.email ? 'input-error' : ''}`} />
                                 </div>
                                 {formik.touched.email && formik.errors.email && (
                                     <div className="validation-message">{formik.errors.email}</div>
@@ -107,7 +87,7 @@ const LoginPage: React.FC = () => {
                                         className="show-password-button"
                                         onClick={() => setShowPassword(!showPassword)}
                                     >
-                                        {showPassword ? <RiEyeOffFill/> : <RiEyeFill/>}
+                                        {showPassword ? <RiEyeOffFill /> : <RiEyeFill />}
                                     </button>
                                 </div>
                                 {formik.touched.password && formik.errors.password && (
