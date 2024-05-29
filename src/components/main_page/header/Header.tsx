@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext'; // Импортируйте контекст авторизации
+import { useAuth } from '../../../contexts/AuthContext';
 import '../../../styles/header.sass';
 // @ts-ignore
 import logo from '../../../assets/logo-header.png';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
 
     const handleButtonClick = () => {
         if (isAuthenticated) {
@@ -24,6 +24,11 @@ const Header: React.FC = () => {
         }
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     return (
         <header className="header-container">
             <nav className="nav-container">
@@ -36,9 +41,16 @@ const Header: React.FC = () => {
                     <a href="#news-section" className="nav-link">Новости</a>
                 </div>
             </nav>
-            <button className="button" onClick={handleButtonClick}>
-                {isAuthenticated ? 'Личный кабинет' : 'Войти'}
-            </button>
+            <div className="button-container">
+                {isAuthenticated ? (
+                    <>
+                        <button className="button" onClick={handleButtonClick}>Личный кабинет</button>
+                        <button className="button" onClick={handleLogout}>Выйти</button>
+                    </>
+                ) : (
+                    <button className="button" onClick={handleButtonClick}>Войти</button>
+                )}
+            </div>
         </header>
     );
 };
