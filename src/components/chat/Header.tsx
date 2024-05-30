@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
-import styles from '../../styles/chat/Header.module.sass';
+import styles from '../../styles/header.sass'
 import Home from '../../pages/main_page/MainPage_app';
 import About from '../../pages/About';
 import Chat from '../../pages/chat/App';
