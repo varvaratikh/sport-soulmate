@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './NewsStyle.sass';
+import '../../../styles/main_page/NewsStyle.sass';
 import { getSportsNews } from './api/newsApi';
 import { translateText } from './api/translateApi';
 import NewsItem from './NewsItem';

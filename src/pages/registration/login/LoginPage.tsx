@@ -28,7 +28,7 @@ const LoginPage: React.FC = () => {
     const [loginError, setLoginError] = useState(false);
 
     const initialValues: Values = { email: '', password: '' };
-    const from = location.state?.from?.pathname || '/home';
+    const from = location.state?.from || '/home';
 
     const handleRegisterPopupOpen = () => setIsRegisterPopupOpen(true);
     const handleRegisterPopupClose = () => setIsRegisterPopupOpen(false);

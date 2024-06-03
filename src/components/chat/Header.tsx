@@ -1,28 +1,55 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
-import styles from '../../styles/header.sass'
-import Home from '../../pages/main_page/MainPage_app';
-import About from '../../pages/About';
-import Chat from '../../pages/chat/App';
-import SearchPage from '../../pages/search/SearchPage';
-import NewsHomePage from '../../components/main_page/news_fragment/NewsHomePage';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import '../../styles/header.sass';
 // @ts-ignore
-import logo from "../../assets/chat/logo_black.png";
-
+import logo from '../../assets/logo-header.png';
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAuth();
+
+    const handleButtonClick = () => {
+        if (isAuthenticated) {
+            navigate('/account');
+        } else {
+            navigate('/');
+        }
+    };
+
+    const handleChatClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (!isAuthenticated) {
+            event.preventDefault();
+            navigate('/');
+        }
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
-        <header className={styles.header}>
-            <div className={styles.logo}>
-                <img src={logo} alt="Logo" className="logo"/>
-            </div>
-            <div className="nav-links">
-                <Link to="/home" className="nav-link">Главная</Link>
-                <a href="#about-section" className="nav-link">О нас</a>
-                <Link to="/chat" className="nav-link" >Чат</Link>
-                <Link to="/search" className="nav-link">Поиск</Link>
-                <a href="#news-section" className="nav-link">Новости</a>
+        <header className="header-container">
+            <nav className="nav-container">
+                <img src={logo} alt="Logo" className="logo" />
+                <div className="nav-links">
+                    <Link to="/home" className="nav-link">Главная</Link>
+                    <a href="#about-section" className="nav-link">О нас</a>
+                    <Link to="/chat" className="nav-link" onClick={handleChatClick}>Чат</Link>
+                    <Link to="/search" className="nav-link">Поиск</Link>
+                    <a href="#news-section" className="nav-link">Новости</a>
+                </div>
+            </nav>
+            <div className="button-container">
+                {isAuthenticated ? (
+                    <>
+                        <button className="button" onClick={handleButtonClick}>Личный кабинет</button>
+                        <button className="button" onClick={handleLogout}>Выйти</button>
+                    </>
+                ) : (
+                    <button className="button" onClick={handleButtonClick}>Войти</button>
+                )}
             </div>
         </header>
     );

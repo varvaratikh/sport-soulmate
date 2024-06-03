@@ -1,6 +1,5 @@
 import React from 'react';
-import '../../../styles/NewStyle.sass';
-
+import '../../../styles/main_page/NewStyle.sass'
 interface NewsItemProps {
     title: string;
     description: string;
