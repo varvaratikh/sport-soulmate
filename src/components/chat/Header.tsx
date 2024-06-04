@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import '../../styles/header.sass';
 // @ts-ignore
-import logo from '../../assets/logo-header.png';
+import logo from '../../assets/chat/logo_black.png';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
