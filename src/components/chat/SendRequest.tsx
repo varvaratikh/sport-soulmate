@@ -14,11 +14,9 @@ const SendRequest: React.FC = () => {
             return;
         }
 
-        // Validate email existence
         fetch(`/api/users?email=${to}`)
             .then(response => {
                 if (response.ok) {
-                    // Submit the request
                     return fetch('/api/requests', {
                         method: 'POST',
                         headers: {
@@ -46,8 +44,8 @@ const SendRequest: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className="send-request-form" onSubmit={handleSubmit}>
+            <div className="form-group">
                 <label>Кому:</label>
                 <input
                     type="email"
@@ -56,7 +54,7 @@ const SendRequest: React.FC = () => {
                     required
                 />
             </div>
-            <div>
+            <div className="form-group">
                 <label>Свой контакт:</label>
                 <input
                     type="text"
@@ -65,7 +63,7 @@ const SendRequest: React.FC = () => {
                     required
                 />
             </div>
-            <div>
+            <div className="form-group">
                 <label>Сообщение:</label>
                 <textarea
                     value={message}
@@ -73,8 +71,8 @@ const SendRequest: React.FC = () => {
                     required
                 />
             </div>
-            {error && <p>{error}</p>}
-            <button type="submit">Отправить</button>
+            {error && <p className="error-message">{error}</p>}
+            <button type="submit" className="submit-button">Отправить</button>
         </form>
     );
 };

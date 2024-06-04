@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import '../../styles/header.sass';
-// @ts-ignore
 import logo from '../../assets/chat/logo_black.png';
 
 const Header: React.FC = () => {
@@ -30,9 +29,9 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className="header-container">
+        <header className="chat-header-container">
             <nav className="nav-container">
-                <img src={logo} alt="Logo" className="logo" />
+                <img src={logo} alt="Logo" className="chat-logo" />
                 <div className="nav-links">
                     <Link to="/home" className="nav-link">Главная</Link>
                     <a href="#about-section" className="nav-link">О нас</a>

@@ -1,101 +1,88 @@
 .App
-  text-align: center
   display: flex
   flex-direction: column
-
-
-.App-header
-  display: flex
-  justify-content: space-between
   align-items: center
-  padding: 20px
-  background-color: #282c34
-  color: white
+  padding: 2rem
+  background-image: url("../../assets/chat/back_chat.png")
+  background-size: cover
+  background-position: center
+  background-repeat: no-repeat
+  min-height: 100vh
+  margin-top: 5rem
 
+.tab-buttons
+  display: flex
+  gap: 0.5rem
+  margin-bottom: 1rem
 
-.App-logo
-  height: 40px
+.tab-buttons .tab
+  padding: 0.5rem 1rem
+  background-color: transparent
+  border: none
+  cursor: pointer
+  font-size: 1.5rem
+  color: #CBCBCB
+  text-decoration: underline
+  transition: color 0.3s
 
+.tab-buttons .tab:hover
+  color: #74adec
 
-nav a
-  color: white
-  margin: 0 15px
+.tab-buttons .tab.active
+  font-weight: bold
   text-decoration: none
+  color: #000000
 
-
-.content
-  display: flex
-  flex-direction: row
-  height: calc(100vh - 60px)
-
-
-aside
-  width: 300px
-  padding: 20px
-  background-color: #f5f5f5
-
-
-.search-bar
+.tab-content
   width: 100%
-  padding: 10px
-  margin-bottom: 20px
-  border: 1px solid #ccc
-  border-radius: 5px
+  max-width: 600px
+  background-color: #D3D9EA
+  padding: 2rem
+  border-radius: 10px
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+  margin-top: 5rem
 
-
-.favorites h2,
-.messages h2
-  margin-bottom: 10px
-
-
-.message-list
-  flex: 1
-  overflow-y: auto
-
-
-.message
-  padding: 10px
-  margin: 5px
-  border-radius: 5px
-
-
-.message.sent
-  background-color: #0047FF
-  color: white
-  text-align: right
-
-
-.message.received
-  background-color: #f1f1f1
-
-
-.message-input
+.send-request-form
   display: flex
-  border-top: 1px solid #ccc
-  padding: 10px
+  flex-direction: column
+  gap: 1rem
 
+.form-group
+  display: flex
+  flex-direction: column
+  gap: 0.5rem
 
-.message-input input
-  flex: 1
-  padding: 10px
-  border: 1px solid #ccc
+.form-group label
+  font-weight: bold
+
+.form-group input,
+.form-group textarea
+  padding: 0.5rem
+  border: 1px solid #ddd
   border-radius: 5px
-  margin-right: 10px
 
-
-.message-input button
-  padding: 10px 20px
+.submit-button
+  padding: 0.5rem 1rem
+  background-color: #007bff
+  color: #fff
   border: none
   border-radius: 5px
-  background-color: #0047FF
-  color: white
   cursor: pointer
 
+.submit-button:hover
+  background-color: #0056b3
 
-.chat-window
+.error-message
+  color: red
+  font-weight: bold
+
+.requests-container
   display: flex
   flex-direction: column
-  justify-content: space-between
-  height: 100%
-  background-color: #fff
+  gap: 1rem
 
+.request-item
+  padding: 1rem
+  background-color: #fff
+  border: 1px solid #ddd
+  border-radius: 5px

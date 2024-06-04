@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import LoginPage from './pages/registration/login/LoginPage';
-import Header from './components/main_page/header/Header';
+import MainHeader from './components/main_page/header/Header';
+import ChatHeader from './components/chat/Header';
 import Home from './pages/main_page/MainPage_app';
 import About from './components/main_page/middle/HomePage';
 import Chat from './pages/chat/App';
@@ -13,11 +14,20 @@ import UserList from './pages/UserList';
 import PrivateRoute from './components/route/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 
+const HeaderWrapper: React.FC = () => {
+    const location = useLocation();
+
+    if (location.pathname.startsWith('/chat')) {
+        return <ChatHeader />;
+    }
+    return <MainHeader />;
+};
+
 const App: React.FC = () => {
     return (
         <AuthProvider>
             <Router>
-                <Header />
+                <HeaderWrapper />
                 <Routes>
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/home" element={<Home />} />
