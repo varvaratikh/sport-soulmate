@@ -1,0 +1,41 @@
+.userInfoContainer {
+  width: 25%;
+  height: 65%;
+  background-color: #ffffff;
+  padding: 60px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(90%);
+}
+
+.userPhoto {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.userName {
+  font-size: 40px;
+  font-weight: 350;
+  margin-bottom: 30px;
+}
+
+.userDetail {
+  margin-bottom: 30px;
+  font-weight: 300;
+  margin-top: 5px;
+  color: grey;
+  font-size: 20px;
+}
+
+.strongText {
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 5px;
+}

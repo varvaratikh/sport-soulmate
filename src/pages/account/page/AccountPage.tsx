@@ -1,10 +1,13 @@
 import React from 'react';
-import TopImage from '../../components/images/TopImage';
-import formImage from '../../assets/form.jpg';
-import UserInfoOverlay from './UserInfoOverlay';
-import userPhoto from "../../assets/userPhoto.jpg"
-import DataForm from "./DataForm";
+
+import formImage from '../../../assets/form.jpg';
+import userPhoto from "../../../assets/userPhoto.jpg"
+
 import { Formik, Form, FormikProps } from 'formik';
+import './accountPage.scss';
+import UserInfoOverlay from "../UserInfoOverlay/UserInfoOverlay";
+import DataForm from "../DataForm/DataForm";
+import TopImage from "../../../components/images/TopImage";
 
 const AccountPage: React.FC = () => {
     const user = {
@@ -27,15 +30,19 @@ const AccountPage: React.FC = () => {
 
     return (
         <div>
-            <TopImage imagePath={formImage}/>
-            <UserInfoOverlay user={user} />
+            <TopImage imagePath={formImage} />
+            <div className="userInfoOverlay">
+                <UserInfoOverlay user={user} />
+            </div>
             <Formik initialValues={initialValues} onSubmit={handleSave}>
                 {(formikProps: FormikProps<typeof initialValues>) => (
                     <Form>
-                        <DataForm
-                            onChange={(field, value) => formikProps.setFieldValue(field, value)}
-                            onSave={formikProps.submitForm}
-                        />
+                        <div className="accountPageContainer">
+                            <DataForm
+                                onChange={(field, value) => formikProps.setFieldValue(field, value)}
+                                onSave={formikProps.submitForm}
+                            />
+                        </div>
                     </Form>
                 )}
             </Formik>

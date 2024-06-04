@@ -7,7 +7,7 @@ import About from './components/main_page/middle/HomePage';
 import Chat from './pages/chat/App';
 import HomePage from "./components/main_page/middle/HomePage";
 import NewsHomePage from "./components/main_page/news_fragment/NewsHomePage";
-import AccountPage from "./pages/account/AccountPage";
+import AccountPage from "./pages/account/page/AccountPage";
 import SearchPage from "./pages/search/SearchPage";
 import UserList from './pages/UserList';
 import PrivateRoute from './components/route/PrivateRoute';
