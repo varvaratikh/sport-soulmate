@@ -18,12 +18,12 @@ const Requests: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div className="requests-container">
             {requests.length === 0 ? (
                 <p>Заявок нет</p>
             ) : (
                 requests.map((request, index) => (
-                    <div key={index}>
+                    <div key={index} className="request-item">
                         <p>От кого: {request.from}</p>
                         <p>Контакт: {request.contact}</p>
                         <p>Сообщение: {request.message}</p>
