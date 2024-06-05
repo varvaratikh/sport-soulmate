@@ -17,11 +17,18 @@ import { AuthProvider } from './contexts/AuthContext';
 const HeaderWrapper: React.FC = () => {
     const location = useLocation();
 
+    if (location.pathname === '/') {
+        return null;
+    }
+
     if (location.pathname.startsWith('/chat')) {
         return <ChatHeader />;
     }
+
     return <MainHeader />;
 };
+
+
 
 const App: React.FC = () => {
     return (

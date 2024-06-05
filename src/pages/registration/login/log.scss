@@ -9,6 +9,7 @@
   position: relative;
   flex-direction: row;
 
+
   & .login-form {
     display: flex;
     flex-direction: column;
@@ -244,19 +245,19 @@
   }
 
   .register-button {
-    background: none; /* Убираем задний фон */
+    background: none;
     color: whitesmoke;
     cursor: pointer;
     border: none;
-    border-radius: 30px; /* Опционально: можно добавить скругленные углы */
-    padding: 10px 20px; /* Опционально: можно настроить внутренние отступы */
+    border-radius: 30px;
+    padding: 10px 20px;
     font-size: 14px;
     margin-bottom: 3px;
     margin-left: -10px;
   }
 
   .register-button:hover {
-    color: #ccc; /* Изменяем цвет текста при наведении */
+    color: #ccc; 
   }
 
 }
