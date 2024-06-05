@@ -39,8 +39,8 @@ const LoginPage: React.FC = () => {
                 email: values.email,
                 password: values.password,
             });
-            const { data } = response;
-            login(data.token);
+            const user = response.data; // Получение данных пользователя
+            login(user); // Передача данных пользователя в AuthContext
             setLoginError(false);
             navigate(from, { replace: true });
         } catch (error) {
@@ -54,6 +54,7 @@ const LoginPage: React.FC = () => {
             setSubmitting(false);
         }
     };
+
 
     return (
         <>
