@@ -38,6 +38,7 @@ const Header: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '30px 50px',
+            zIndex: 10000,
         },
         logo: {
             width: '40px',
