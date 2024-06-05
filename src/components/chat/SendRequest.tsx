@@ -9,10 +9,10 @@ const SendRequest: React.FC = () => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (!validateEmail(to)) {
-            setError('Неверный формат email');
-            return;
-        }
+        // if (!validateEmail(to)) {
+        //     setError('Неверный формат email');
+        //     return;
+        // }
 
         fetch(`/api/users?email=${to}`)
             .then(response => {
@@ -38,10 +38,10 @@ const SendRequest: React.FC = () => {
             .catch(error => setError(error.message));
     };
 
-    const validateEmail = (email: string) => {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    };
+    // const validateEmail = (email: string) => {
+    //     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     return re.test(email);
+    // };
 
     return (
         <form className="send-request-form" onSubmit={handleSubmit}>

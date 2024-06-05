@@ -6,16 +6,31 @@ interface Request {
     message: string;
 }
 
+interface User {
+    email: string;
+}
+
 const Requests: React.FC = () => {
     const [requests, setRequests] = useState<Request[]>([]);
+    const [email, setEmail] = useState<string | null>(null);
 
     useEffect(() => {
-        // Fetch requests from the backend
-        fetch('/api/requests')
+        // Fetch current user
+        fetch('/api/current-user')
             .then(response => response.json())
-            .then(data => setRequests(data))
-            .catch(error => console.error('Error fetching requests:', error));
+            .then((user: User) => setEmail(user.email))
+            .catch(error => console.error('Error fetching user:', error));
     }, []);
+
+    useEffect(() => {
+        if (email) {
+            // Fetch requests for the current user
+            fetch(`/api/requests?email=${email}`)
+                .then(response => response.json())
+                .then(data => setRequests(data))
+                .catch(error => console.error('Error fetching requests:', error));
+        }
+    }, [email]);
 
     return (
         <div className="requests-container">
