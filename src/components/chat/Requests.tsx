@@ -17,7 +17,6 @@ const Requests: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Fetch current user
         fetch('/api/current-user')
             .then(response => response.json())
             .then((user: User) => {
