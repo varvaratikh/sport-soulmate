@@ -8,7 +8,7 @@ export const getSportsNews = async () => {
         const response = await axios.get(`${BASE_URL}/top-headlines`, {
             params: {
                 category: 'sports',
-                country: 'ru',
+                country: 'us',
                 pageSize: 4,
                 apiKey: API_KEY,
             },

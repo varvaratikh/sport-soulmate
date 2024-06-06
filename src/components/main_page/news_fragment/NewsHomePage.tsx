@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../../styles/main_page/NewsStyle.sass';
 import { getSportsNews } from './api/newsApi';
-import { translateText } from './api/translateApi';
 import NewsItem from './NewsItem';
 import NewsModal from './NewsModal';
 
@@ -21,11 +20,9 @@ const NewsHomePage: React.FC = () => {
             setLoading(true);
             const articles = await getSportsNews();
             const translatedNewsPromises = articles.slice(0, 4).map(async (article: any) => {
-                const translatedTitle = await translateText(article.title);
-                const translatedDescription = await translateText(article.description);
                 return {
-                    title: translatedTitle,
-                    description: translatedDescription,
+                    title: article.title,
+                    description: article.description,
                     imageUrl: article.urlToImage || 'https://assets.gq.ru/photos/5d9f4eb4cd5287000832917d/master/w_1600%2Cc_limit/07.jpg',
                 };
             });
