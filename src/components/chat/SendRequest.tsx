@@ -17,7 +17,6 @@ const SendRequest: React.FC = () => {
         try {
             const userResponse = await fetch(`/api/users?email=${to}`);
             if (!userResponse.ok) {
-                const errorText = await userResponse.text();
                 throw new Error(`User not found`);
             }
 
@@ -30,7 +29,6 @@ const SendRequest: React.FC = () => {
             });
 
             if (!requestResponse.ok) {
-                const errorText = await requestResponse.text();
                 throw new Error(`Error sending request`);
             }
 
