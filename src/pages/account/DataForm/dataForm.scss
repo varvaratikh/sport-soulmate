@@ -56,7 +56,7 @@
 
 .dataFormContainer {
   width: 35%;
-  height: 40%;
+  height: auto;
   background-color: #ffffff;
   padding: 60px;
   border-radius: 30px;
@@ -66,7 +66,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 5px;
+  margin-bottom: 50px;
 }
 
 .iconWrapper {
@@ -99,4 +99,32 @@
   padding: 5px 10px;
   margin-bottom: 15px;
   margin-right: 20px;
+}
+
+
+
+.dataDisplayItem {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.dataDisplayItem strong {
+  margin-right: 10px;
+}
+
+.dataDisplayButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #0056b3;
+  border-radius: 20px;
+  background-color: transparent;
+  color: #0056b3;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: #004080;
+    color: white;
+  }
 }

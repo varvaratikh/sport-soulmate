@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Formik, Form, FormikProps } from 'formik';
 import './accountPage.scss';
 import UserInfoOverlay from '../UserInfoOverlay/UserInfoOverlay';
 import DataForm from '../DataForm/DataForm';
@@ -9,6 +7,12 @@ import formImage from '../../../assets/form.jpg';
 
 const AccountPage: React.FC = () => {
     const [user, setUser] = useState<any>(null);
+    const [formData, setFormData] = useState({
+        sport: '',
+        age: '',
+        city: '',
+        sports: []
+    });
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -23,13 +27,8 @@ const AccountPage: React.FC = () => {
         return <div>Loading...</div>;
     }
 
-    const initialValues = {
-        sport: '',
-        age: '',
-        city: ''
-    };
-
-    const handleSave = (values: typeof initialValues) => {
+    const handleSave = (values: any) => {
+        setFormData(values);
         console.log('Сохранено:', values);
     };
 
@@ -39,18 +38,9 @@ const AccountPage: React.FC = () => {
             <div className="userInfoOverlay">
                 <UserInfoOverlay />
             </div>
-            <Formik initialValues={initialValues} onSubmit={handleSave}>
-                {(formikProps: FormikProps<typeof initialValues>) => (
-                    <Form>
-                        <div className="accountPageContainer">
-                            <DataForm
-                                onChange={(field, value) => formikProps.setFieldValue(field, value)}
-                                onSave={formikProps.submitForm}
-                            />
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+            <div className="accountPageContainer">
+                <DataForm onSave={handleSave} initialValues={formData} />
+            </div>
         </div>
     );
 };
