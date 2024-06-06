@@ -8,18 +8,9 @@ const SendRequest: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // const validateEmail = (email: string) => {
-    //     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //     return re.test(email);
-    // };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-
-        // if (!validateEmail(to)) {
-        //     setError('Неверный формат email');
-        //     return;
-        // }
 
         setLoading(true);
 
@@ -40,7 +31,7 @@ const SendRequest: React.FC = () => {
 
             if (!requestResponse.ok) {
                 const errorText = await requestResponse.text();
-                throw new Error(`Error sending request: ${errorText}`);
+                throw new Error(`Error sending request`);
             }
 
             setTo('');
