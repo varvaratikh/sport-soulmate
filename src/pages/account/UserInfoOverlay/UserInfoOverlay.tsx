@@ -4,7 +4,6 @@ import { useAuth } from '../../../contexts/AuthContext';
 
 const defaultAvatarUrl = 'https://cojo.ru/wp-content/uploads/2022/12/avatarki-dlia-vatsapa-50-1.webp';
 
-
 const UserInfoOverlay: React.FC = () => {
     const { user } = useAuth();
 

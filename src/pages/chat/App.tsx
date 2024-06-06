@@ -4,7 +4,7 @@ import Requests from "../../components/chat/Requests";
 import SendRequest from "../../components/chat/SendRequest";
 
 const App: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'requests' | 'send'>('requests');
+    const [activeTab, setActiveTab] = useState<'requests' | 'send'>('send');
 
     return (
         <div className="App">
